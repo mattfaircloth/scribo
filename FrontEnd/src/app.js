@@ -1,9 +1,8 @@
 class App {
   static init() {
     App.pageContainers();
-    App.loginContainers();
-    App.loginListeners();
-    App.signupListeners();
+    App.loginSignupContainers();
+    App.loginSignupContainers();
   }
 
   static pageContainers() {
@@ -12,24 +11,21 @@ class App {
     App.menuContainer = document.getElementById("menu")
   }
 
-  static loginContainers() {
+  static loginSignupContainers() {
     App.loginForm = document.getElementById("login-form")
     App.loginName = document.getElementById("login-name")
     App.signupButton = document.getElementById("signup-button")
   }
 
-  static loginListeners() {
+  static loginSignupListeners() {
     App.loginForm.addEventListener('submit', event => App.loginEvent(event))
+    App.signupButton.addEventListener('click', event => App.signupEvent(event))
     //fetch users once user is return render user with instance method renderWelcomeForMenu
   }
 
   static loginEvent(event) {
     event.preventDefault()
     console.log(event)
-  }
-
-  static signupListeners() {
-    App.signupButton.addEventListener('click', event => App.signupEvent(event))
   }
 
   static signupEvent(event) {
