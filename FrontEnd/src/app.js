@@ -3,6 +3,7 @@ class App {
     App.pageContainers();
     App.loginContainers();
     App.loginListeners();
+    App.signupListeners();
   }
 
   static pageContainers() {
@@ -19,11 +20,24 @@ class App {
 
   static loginListeners() {
     App.loginForm.addEventListener('submit', event => App.logIn(event))
+    //fetch users once user is return render user with instance method renderWelcomeForMenu
   }
 
   static logIn(event) {
     event.preventDefault()
-
     console.log(event)
   }
+
+  static signupListeners() {
+    App.signupButton.addEventListener('click', event => App.signUp(event))
+  }
+
+  static signUp(event) {
+    event.preventDefault()
+    console.log(event)
+  }
+
+
+
+
 }
