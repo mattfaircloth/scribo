@@ -19,6 +19,11 @@ class Api::V1::LecturesController < ApplicationController
     end
   end
 
+  def notebooks
+    @notebooks = Lecture.find(params[:id]).notebooks
+    render json: @notebooks
+  end
+
   def update
     @lecture = Lecture.find(params[:id])
 
