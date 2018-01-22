@@ -2,7 +2,7 @@ class App {
   static init() {
     App.pageContainers();
     App.loginSignupContainers();
-    App.loginSignupContainers();
+    App.loginSignupListeners();
   }
 
   static pageContainers() {
