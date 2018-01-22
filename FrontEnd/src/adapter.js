@@ -6,7 +6,7 @@ class Adapter {
   }
 
 
-  static createUsers(passedInName){
+  static createUsers({passedInName}){
     return fetch("http://localhost:3000/api/v1/users", {
       method: "POST",
       headers: {

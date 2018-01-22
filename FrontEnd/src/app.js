@@ -19,20 +19,20 @@ class App {
   }
 
   static loginListeners() {
-    App.loginForm.addEventListener('submit', event => App.logIn(event))
+    App.loginForm.addEventListener('submit', event => App.loginEvent(event))
     //fetch users once user is return render user with instance method renderWelcomeForMenu
   }
 
-  static logIn(event) {
+  static loginEvent(event) {
     event.preventDefault()
     console.log(event)
   }
 
   static signupListeners() {
-    App.signupButton.addEventListener('click', event => App.signUp(event))
+    App.signupButton.addEventListener('click', event => App.signupEvent(event))
   }
 
-  static signUp(event) {
+  static signupEvent(event) {
     event.preventDefault()
     console.log(event)
   }
