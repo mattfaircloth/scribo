@@ -25,7 +25,10 @@ class App {
 
     if (event.target.dataset.action === "click-lecture") {
       event.preventDefault()
-      console.log(event)
+      const selectedLecture = Lecture.all().find(lecture => lecture.id == event.target.dataset.lectureid)
+      const currentNotebook = Notebook.all().find(notebook => notebook.lecture === selectedLecture)
+      App.notebookContainer.innerHTML = currentNotebook.renderNotebookForNotebookContainer();
+
     }
   }
 
@@ -46,6 +49,7 @@ class App {
     App.setCurrentUser(App.loginName.value)
     App.renderWelcomeForMenuContainer()
     App.createAllCurrentUserLectures()
+    App.createAllCurrentUserNotebooks()
   }
 
   static setCurrentUser(loginValue) {
@@ -63,6 +67,10 @@ class App {
   static renderCurrentUserLecturesForMenuContainer() {
     App.menuContainer.innerHTML += `${Lecture.all().map( lecture => lecture.renderLectureForMenuContainer() ).join('')}`
     App.menuContainer.innerHTML += `${App.currentUser.renderNewLectureButtonForMenuContainer()}`
+  }
+
+  static createAllCurrentUserNotebooks() {
+    const await = Adapter.getCurrentUsersNotebooks().then( notebooksData => notebooksData.forEach( notebookData => new Notebook(notebookData)))
   }
 
   static signupEvent(event) {
