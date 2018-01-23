@@ -18,7 +18,7 @@ const User = (function() {
   }
 
   renderNewLectureButtonForMenuContainer(){
-    return `<button type="button" id="create-new-lecture-button">Create A Lecture</button>`
+    return `<button type="button" id="create-new-lecture-button" data-action="create-a-lecture">Create A Lecture</button>`
   }
 
 

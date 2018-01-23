@@ -27,6 +27,10 @@ class App {
       event.preventDefault()
       console.log(event)
     }
+    else if (event.target.dataset.action === "create-a-lecture") {
+      event.preventDefault()
+      App.createNewLecture()
+    }
   }
 
   static loginSignupElements() {
@@ -69,6 +73,26 @@ class App {
     event.preventDefault()
     console.log("NOT IMPLEMENTED");
   }
+
+
+
+  // static methods for creating a new lecture
+
+  static createNewLecture(){
+    App.menuContainer.innerHTML = Lecture.renderCreateLectureFormForNotebookContainer()
+    App.newLectureSubmitButton = document.getElementById("new-lecture-button-submit")
+    App.newLectureTitle = document.getElementById("new-lecture-title")
+    App.newLectureDate = document.getElementById("new-lecture-date")
+
+    App.newLectureSubmitButton.addEventListener("click", (event)=>{
+      Adapter.createLectures(App.newLectureTitle.value, App.newLectureDate.value, App.currentUser.id).then( data => new Lecture(data))
+    })
+
+
+    // App.newLectureTitle = document.getElementById("new-lecture-title")
+    // App.newLectureDate = document.getElementById("new-lecture-date")
+  }
+
 
 
 }
