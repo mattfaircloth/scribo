@@ -10,8 +10,8 @@ class Adapter {
     .then(resp => resp.json())
   }
 
-  static getCurrentUsersNotebooks() {
-    return fetch(`http://localhost:3000/api/v1/users/${App.currentUser.id}/notebooks`)
+  static getNotebooks(){
+    return fetch("http://localhost:3000/api/v1/notebooks")
     .then(resp => resp.json())
   }
 
@@ -82,21 +82,21 @@ class Adapter {
     }).then(resp => resp.json())
   }
 
-  static updateLectures(){
-  }
-
-  static deleteLectures(){
-  }
-
-
-
-  static getNotebooks(){
-  }
-
-  static updateNotebooks(){
-  }
-
-  static deleteNotebooks(){
-  }
+  // static updateLectures(){
+  // }
+  //
+  // static deleteLectures(){
+  // }
+  //
+  //
+  //
+  // static getNotebooks(){
+  // }
+  //
+  // static updateNotebooks(){
+  // }
+  //
+  // static deleteNotebooks(){
+  // }
 
 }
