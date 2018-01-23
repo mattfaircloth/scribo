@@ -41,6 +41,8 @@ body {
   background: linear-gradient(rgb(255, 254, 245) 75%, rgb(237, 236, 226));
   background-attachment: fixed;
   box-shadow:10px 10px 20px rgb(44, 44, 55);
+
+  font-size: font-size: 1.5vw;
 }
 
 #logo-container {
@@ -179,4 +181,15 @@ body {
   position: relative;
   top: 20vh;
   font-size: 1.25vw;
+}
+
+#welcome-message {
+  font-size: 4vw;
+  margin-top: 4vh;
+  margin-bottom: 4vh;
+}
+
+#welcome-user-name {
+  font-weight: bold;
+  color: rgb(54, 54, 71);
 }

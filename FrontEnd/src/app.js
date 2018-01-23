@@ -2,9 +2,9 @@ class App {
   static init() {
     App.createAllExistingUsers();
     App.pageElements();
+    App.pageListeners();
     App.loginSignupElements();
     App.loginSignupListeners();
-    App.pageListeners();
   }
 
   static createAllExistingUsers() {
@@ -22,7 +22,6 @@ class App {
   }
 
   static lectureClickEvent(event) {
-
     if (event.target.dataset.action === "click-lecture") {
       event.preventDefault()
       const selectedLecture = Lecture.all().find(lecture => lecture.id == event.target.dataset.lectureid)
@@ -47,7 +46,6 @@ class App {
   static loginEvent(event) {
     event.preventDefault()
     App.setCurrentUser(App.loginName.value)
-    App.renderWelcomeForMenuContainer()
     App.createAllCurrentUserLectures()
     App.createAllCurrentUserNotebooks()
   }
@@ -56,17 +54,22 @@ class App {
     App.currentUser = User.all().find(user => user.name === loginValue)
   }
 
-  static renderWelcomeForMenuContainer() {
-    App.menuContainer.innerHTML = App.currentUser.renderForWelcomeForMenuContainer()
-  }
-
   static createAllCurrentUserLectures() {
-    const await = Adapter.getCurrentUsersLectures().then( lecturesData => lecturesData.forEach( lectureData => new Lecture(lectureData))).then(event => App.renderCurrentUserLecturesForMenuContainer())
+    const await = Adapter.getCurrentUsersLectures().then( lecturesData => lecturesData.forEach( lectureData => new Lecture(lectureData))).then(event => App.handleWelcomeAndCurrentUserLecturesForMenuContainer())
   }
 
-  static renderCurrentUserLecturesForMenuContainer() {
+  static handleWelcomeAndCurrentUserLecturesForMenuContainer() {
+    App.menuContainer.innerHTML = App.renderForWelcomeForMenuContainer()
     App.menuContainer.innerHTML += `${Lecture.all().map( lecture => lecture.renderLectureForMenuContainer() ).join('')}`
-    App.menuContainer.innerHTML += `${App.currentUser.renderNewLectureButtonForMenuContainer()}`
+    App.menuContainer.innerHTML += `${App.renderNewLectureButtonForMenuContainer()}`
+  }
+
+  static renderForWelcomeForMenuContainer(){
+    return `<div id="welcome-message">Welcome,<br /><span id="welcome-user-name">${App.currentUser.name}</span>!</div>Your lectures:`
+  }
+
+  static renderNewLectureButtonForMenuContainer(){
+    return `<button type="button" id="create-new-lecture-button">Create A Lecture</button>`
   }
 
   static createAllCurrentUserNotebooks() {
