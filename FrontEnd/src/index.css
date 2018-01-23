@@ -1,0 +1,182 @@
+/* font-family: 'Comfortaa', cursive; */
+/* font-family: 'Merriweather', serif; */
+
+body {
+  background-color: rgb(54, 54, 71);
+  background: linear-gradient(rgb(54, 54, 71) 75%, rgb(37, 37, 50));
+  background-attachment: fixed;
+  font-family: 'Merriweather', serif;
+  color: rgb(40, 40, 40);
+}
+
+#master {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  display:grid;
+  grid-template-columns: 5% 55% 5% auto 5%;;
+  grid-template-rows: 5% 5% auto 5%;
+}
+
+#notebook {
+  grid-row-start: 2;
+  grid-row-end: 5;
+  grid-column: 2;
+  padding: 5px;
+  text-align: center;
+  background-color: rgb(255, 254, 245);
+  background: linear-gradient(rgb(255, 254, 245) 75%, rgb(237, 236, 226));
+  background-attachment: fixed;
+  box-shadow:10px 10px 50px rgb(44, 44, 55);
+}
+
+#menu {
+  grid-row: 3;
+  grid-column: 4;
+  padding: 5px;
+  text-align: center;50%;
+  background-color: rgb(255, 254, 245);
+  background: linear-gradient(rgb(255, 254, 245) 75%, rgb(237, 236, 226));
+  background-attachment: fixed;
+  box-shadow:10px 10px 20px rgb(44, 44, 55);
+}
+
+#logo-container {
+  position:absolute;
+  top: 45%;
+  right: 50.5%;
+}
+
+#logo-sribio {
+  font-family: 'Comfortaa', cursive;
+  color: rgb(54, 54, 71);
+  font-size: 10vw;
+  font-weight: 900;
+  text-shadow:3px 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+#logo-right-paren {
+  font-family: 'Comfortaa', cursive;
+  font-size: 19vw;
+  color: rgb(54, 54, 71);
+  text-shadow:3px 3px 10px rgba(0, 0, 0, 0.15);
+  position:absolute;
+  bottom: 7vh;
+  right: 5vw;
+  -ms-transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+
+#logo-left-paren {
+  font-family: 'Comfortaa', cursive;
+  font-size: 19vw;
+  color: rgb(54, 54, 71);
+  text-shadow:-3px -3px 10px rgba(0, 0, 0, 0.15);
+  position:absolute;
+  bottom: 7vh;
+  right: 25vw;
+  -ms-transform: rotate(-90deg);
+  -webkit-transform: rotate(-90deg);
+  transform: rotate(-90deg);
+}
+
+#logo-float-paren {
+  font-family: 'Comfortaa', cursive;
+  font-size: 18vw;
+  color: rgb(54, 54, 71);
+  text-shadow:-3px -3px 10px rgba(0, 0, 0, 0.15);
+  position:absolute;
+  bottom: 15vh;
+  right: 7vw;
+  -ms-transform: rotate(-95deg);
+  -webkit-transform: rotate(-95deg);
+  transform: rotate(-95deg);
+}
+
+#slogan {
+  font-family: 'Merriweather', serif;
+  font-size: 1.75vw;
+  position:absolute;
+  width: 32vw;
+  right: 1vw;
+  text-shadow: none;
+
+}
+
+#login-name, #login-password {
+  background-color: inherit;
+  font-family: 'Merriweather', serif;
+  color: rgb(54, 54, 71);
+  font-size: 1.25vw;
+  text-align: center;
+  border-style: none;
+  border-bottom-style: solid;
+  border-color: rgb(54, 54, 71);
+  border-width: 1px;
+  margin: 1.5vmin;
+  margin-top: 3vmin;
+  width: 15vw;
+}
+
+#login-submit, #signup-button {
+  background-color: rgb(54, 54, 71);
+  color: rgb(255, 254, 245);
+  border: none;
+  font-size: 1.25vw;
+  font-family: 'Merriweather', serif;
+  box-shadow:2px 2px 10px rgba(0, 0, 0, 0.15);
+  margin: 1.5vmin;
+  margin-top: 3vmin;
+  width: 15vw;
+  height: 3vw;
+}
+
+#signup-button {
+  margin-top: 1.5vmin;
+  font-size: 1.15vw;
+  width: 10vw;
+  height: 2.5vw;
+}
+
+#login-submit:hover, #signup-button:hover {
+  background-color: rgb(81, 81, 107);
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+}
+
+#login-submit:active, #signup-button:active {
+  box-shadow:1px 1px 10px rgba(0, 0, 0, 0.4);
+}
+
+#login-name:focus, #login-password:focus, #login-submit:focus, #signup-button:focus {
+  outline: none;
+}
+
+#big-hello {
+  color: rgb(54, 54, 71);
+  position: relative;
+  top: 6vh;
+  font-size: 4vw;
+  font-weight: bolder;
+}
+
+#hello-message {
+  position: relative;
+  top: 10vh;
+  font-size: 1.5vw;
+  line-height: 6vh;
+}
+
+#login-form {
+  position: relative;
+  top: 10vh;
+}
+
+#signup-message {
+  position: relative;
+  top: 20vh;
+  font-size: 1.25vw;
+}

@@ -5,6 +5,11 @@ class Adapter {
     .then(resp => resp.json())
   }
 
+  static getCurrentUsersLectures(){
+    return fetch(`http://localhost:3000/api/v1/users/${App.currentuser.id}/lectures`)
+    .then(resp => resp.json())
+  }
+
 
   static createUsers({passedInName}){
     return fetch("http://localhost:3000/api/v1/users", {

@@ -1,17 +1,22 @@
 class App {
   static init() {
-    App.pageContainers();
-    App.loginSignupContainers();
+    App.createAllExistingUsers();
+    App.pageElements();
+    App.loginSignupElements();
     App.loginSignupListeners();
   }
 
-  static pageContainers() {
+  static createAllExistingUsers() {
+    Adapter.getUsers().then( usersData => usersData.forEach( userData => new User(userData)))
+  }
+
+  static pageElements() {
     App.notebookContainer = document.getElementById("notebook")
     App.masterContainer = document.getElementById("master")
     App.menuContainer = document.getElementById("menu")
   }
 
-  static loginSignupContainers() {
+  static loginSignupElements() {
     App.loginForm = document.getElementById("login-form")
     App.loginName = document.getElementById("login-name")
     App.signupButton = document.getElementById("signup-button")
@@ -25,15 +30,31 @@ class App {
 
   static loginEvent(event) {
     event.preventDefault()
-    console.log(event)
+    App.setCurrentuser(App.loginName.value)
+    App.renderWelcomeForMenuContainer()
+    App.createAllCurrentUserLectures()
+  }
+
+  static setCurrentuser(loginValue) {
+    App.currentuser = User.all().find(user => user.name === loginValue)
+  }
+
+  static renderWelcomeForMenuContainer() {
+    App.menuContainer.innerHTML = App.currentuser.renderForWelcomeForMenuContainer()
+  }
+
+  static createAllCurrentUserLectures() {
+    const await = Adapter.getCurrentUsersLectures().then( lecturesData => lecturesData.forEach( lectureData => new Lecture(lectureData))).then(event => App.renderCurrentUserLecturesForNotebookContainer())
+  }
+
+  static renderCurrentUserLecturesForNotebookContainer() {
+    App.notebookContainer.innerHTML = `${Lecture.all().map( lecture => lecture.renderLectureForNotebookContainer() ).join('')}`
   }
 
   static signupEvent(event) {
     event.preventDefault()
-    console.log(event)
+    console.log("NOT IMPLEMENTED");
   }
-
-
 
 
 }

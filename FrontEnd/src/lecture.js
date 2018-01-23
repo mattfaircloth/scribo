@@ -1,14 +1,22 @@
-class Lecture {
+const Lecture = (function() {
+  const all = []
+  return class Lecture {
   constructor({title, date_time, id}){
     this.title = title
     this.date_time = date_time
     this.id = id
+    this.users = []
+    this.notebooks = []
+    all.push(this)
   }
 
-  render(){
-    return `<ul>
-              <li id="li-${this.id}"> ${this.title} - ${this.date_time}</li>
-            </ul>`
+  static all() {
+    return all
   }
-  
+
+  renderLectureForNotebookContainer(){
+    return `<div id="lecture-${this.id}">${this.title} - ${this.date_time}</div>`
+  }
+
 }
+})();

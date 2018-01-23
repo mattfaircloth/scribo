@@ -9,5 +9,7 @@ Rails.application.routes.draw do
   end
 
   get 'api/v1/users/:id/notebooks', to: 'api/v1/users#notebooks', as: 'api_v1_user_notebooks'
+  get 'api/v1/users/:id/lectures', to: 'api/v1/users#lectures', as: 'api_v1_user_lectures'
+
   get 'api/v1/lectures/:id/notebooks', to: 'api/v1/lectures#notebooks', as: 'api_v1_lecture_notebooks'
 end

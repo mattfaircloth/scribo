@@ -14,6 +14,11 @@ class Api::V1::UsersController < ApplicationController
     render json: @notebooks
   end
 
+  def lectures
+    @lectures = User.find(params[:id]).lectures
+    render json: @lectures
+  end
+
   def create
     @user = User.new(user_params)
 
