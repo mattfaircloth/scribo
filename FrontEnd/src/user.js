@@ -17,6 +17,10 @@ const User = (function() {
     return `Welcome ${this.name}!`
   }
 
+  renderNewLectureButtonForMenuContainer(){
+    return `<<button type="button" id="create-new-lecture-button">Create A Lecture</button>`
+  }
+
 
 
 }

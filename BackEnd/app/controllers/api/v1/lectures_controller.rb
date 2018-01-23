@@ -10,8 +10,9 @@ class Api::V1::LecturesController < ApplicationController
   end
 
   def create
-    @lecture = Lecture.new(lecture_params)
-
+    @user = User.find(params[:userid])
+    @lecture = @user.lectures.build(lecture_params)
+    
     if @lecture.save
       render json: @lecture
     else

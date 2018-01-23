@@ -6,7 +6,7 @@ class Adapter {
   }
 
   static getCurrentUsersLectures(){
-    return fetch(`http://localhost:3000/api/v1/users/${App.currentuser.id}/lectures`)
+    return fetch(`http://localhost:3000/api/v1/users/${App.currentUser.id}/lectures`)
     .then(resp => resp.json())
   }
 
@@ -22,6 +22,12 @@ class Adapter {
         name: passedInName
       })
     }).then(resp => resp.json())
+  }
+
+  static getCurrentUsersSelectedLectureNotebook(lectureId) {
+    return fetch(`http://localhost:3000/api/v1/users/${App.currentUser.id}/notebooks`, {
+
+    })
   }
 
 
@@ -57,16 +63,16 @@ class Adapter {
   }
 
   static createLectures(){
-    return fetch("http://localhost:3000/api/v1/users", {
+    return fetch("http://localhost:3000/api/v1/lectures", {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json'
       },
       body: JSON.stringify({
-        title: passedInName
-        date_time: passedInTime
-        userid: App.currentuser
+        title: "theActualtitle",
+        date_time: "theActualdatetime",
+        userid: 2
       })
     }).then(resp => resp.json())
   }
