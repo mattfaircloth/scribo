@@ -26,8 +26,16 @@ class App {
       event.preventDefault()
       const selectedLecture = Lecture.all().find(lecture => lecture.id == event.target.dataset.lectureid)
       const currentNotebook = Notebook.all().find(notebook => notebook.lecture === selectedLecture)
+      debugger;
       App.notebookContainer.innerHTML = currentNotebook.renderNotebookForNotebookContainer();
 
+      //Create functionality to display Users in MenuContainer,
+      //App.menuContainer.innerHTML = selectedLecture.users
+
+    }
+    else if (event.target.dataset.action === "create-a-lecture") {
+      event.preventDefault()
+      App.createNewLecture()
     }
   }
 
@@ -46,8 +54,8 @@ class App {
   static loginEvent(event) {
     event.preventDefault()
     App.setCurrentUser(App.loginName.value)
+    App.createAllNotebooks()
     App.createAllCurrentUserLectures()
-    App.createAllCurrentUserNotebooks()
   }
 
   static setCurrentUser(loginValue) {
@@ -55,7 +63,7 @@ class App {
   }
 
   static createAllCurrentUserLectures() {
-    const await = Adapter.getCurrentUsersLectures().then( lecturesData => lecturesData.forEach( lectureData => new Lecture(lectureData))).then(event => App.handleWelcomeAndCurrentUserLecturesForMenuContainer())
+    Adapter.getCurrentUsersLectures().then( lecturesData => lecturesData.forEach( lectureData => new Lecture(lectureData))).then(event => App.handleWelcomeAndCurrentUserLecturesForMenuContainer())
   }
 
   static handleWelcomeAndCurrentUserLecturesForMenuContainer() {
@@ -72,14 +80,34 @@ class App {
     return `<button type="button" id="create-new-lecture-button">Create A Lecture</button>`
   }
 
-  static createAllCurrentUserNotebooks() {
-    const await = Adapter.getCurrentUsersNotebooks().then( notebooksData => notebooksData.forEach( notebookData => new Notebook(notebookData)))
+  static createAllNotebooks() {
+    Adapter.getNotebooks().then( notebooksData => notebooksData.forEach( notebookData => new Notebook(notebookData)))
   }
 
   static signupEvent(event) {
     event.preventDefault()
     console.log("NOT IMPLEMENTED");
   }
+
+
+
+  // static methods for creating a new lecture
+
+  static createNewLecture(){
+    App.menuContainer.innerHTML = Lecture.renderCreateLectureFormForNotebookContainer()
+    App.newLectureSubmitButton = document.getElementById("new-lecture-button-submit")
+    App.newLectureTitle = document.getElementById("new-lecture-title")
+    App.newLectureDate = document.getElementById("new-lecture-date")
+
+    App.newLectureSubmitButton.addEventListener("click", (event)=>{
+      Adapter.createLectures(App.newLectureTitle.value, App.newLectureDate.value, App.currentUser.id).then( data => new Lecture(data))
+    })
+
+
+    // App.newLectureTitle = document.getElementById("new-lecture-title")
+    // App.newLectureDate = document.getElementById("new-lecture-date")
+  }
+
 
 
 }

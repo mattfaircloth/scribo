@@ -10,8 +10,8 @@ class Adapter {
     .then(resp => resp.json())
   }
 
-  static getCurrentUsersNotebooks() {
-    return fetch(`http://localhost:3000/api/v1/users/${App.currentUser.id}/notebooks`)
+  static getNotebooks(){
+    return fetch("http://localhost:3000/api/v1/notebooks")
     .then(resp => resp.json())
   }
 
@@ -67,7 +67,7 @@ class Adapter {
   static getLectures(){
   }
 
-  static createLectures(){
+  static createLectures(lecTitle, lecDate, user_id){
     return fetch("http://localhost:3000/api/v1/lectures", {
       method: "POST",
       headers: {
@@ -75,28 +75,28 @@ class Adapter {
         Accept: 'application/json'
       },
       body: JSON.stringify({
-        title: "theActualtitle",
-        date_time: "theActualdatetime",
-        userid: 2
+        title: lecTitle,
+        date_time: lecDate,
+        admin_id: user_id
       })
     }).then(resp => resp.json())
   }
 
-  static updateLectures(){
-  }
-
-  static deleteLectures(){
-  }
-
-
-
-  static getNotebooks(){
-  }
-
-  static updateNotebooks(){
-  }
-
-  static deleteNotebooks(){
-  }
+  // static updateLectures(){
+  // }
+  //
+  // static deleteLectures(){
+  // }
+  //
+  //
+  //
+  // static getNotebooks(){
+  // }
+  //
+  // static updateNotebooks(){
+  // }
+  //
+  // static deleteNotebooks(){
+  // }
 
 }
