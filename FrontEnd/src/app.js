@@ -25,7 +25,7 @@ class App {
   static loginSignupListeners() {
     App.loginForm.addEventListener('submit', event => App.loginEvent(event))
     App.signupButton.addEventListener('click', event => App.signupEvent(event))
-    //fetch users once user is return render user with instance method renderWelcomeForMenu
+    //fetch users once user is return render user with instance method renderWelcomeForMenur
   }
 
   static loginEvent(event) {
@@ -48,7 +48,7 @@ class App {
   }
 
   static renderCurrentUserLecturesForNotebookContainer() {
-    App.notebookContainer.innerHTML = `${Lecture.all().map( lecture => lecture.renderLectureForNotebookContainer() ).join('')}`
+    App.menuContainer.innerHTML += `${Lecture.all().map( lecture => lecture.renderLectureForNotebookContainer() ).join('')}`
   }
 
   static signupEvent(event) {

@@ -57,6 +57,18 @@ class Adapter {
   }
 
   static createLectures(){
+    return fetch("http://localhost:3000/api/v1/users", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      },
+      body: JSON.stringify({
+        title: passedInName
+        date_time: passedInTime
+        userid: App.currentuser
+      })
+    }).then(resp => resp.json())
   }
 
   static updateLectures(){
