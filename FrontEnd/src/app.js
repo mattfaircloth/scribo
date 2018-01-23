@@ -25,7 +25,14 @@ class App {
 
     if (event.target.dataset.action === "click-lecture") {
       event.preventDefault()
-      console.log(event)
+      const selectedLecture = Lecture.all().find(lecture => lecture.id == event.target.dataset.lectureid)
+      const currentNotebook = Notebook.all().find(notebook => notebook.lecture === selectedLecture)
+      debugger;
+      App.notebookContainer.innerHTML = currentNotebook.renderNotebookForNotebookContainer();
+
+      //Create functionality to display Users in MenuContainer,
+      //App.menuContainer.innerHTML = selectedLecture.users
+
     }
     else if (event.target.dataset.action === "create-a-lecture") {
       event.preventDefault()
@@ -49,6 +56,7 @@ class App {
     event.preventDefault()
     App.setCurrentUser(App.loginName.value)
     App.renderWelcomeForMenuContainer()
+    App.createAllNotebooks()
     App.createAllCurrentUserLectures()
   }
 
@@ -61,12 +69,16 @@ class App {
   }
 
   static createAllCurrentUserLectures() {
-    const await = Adapter.getCurrentUsersLectures().then( lecturesData => lecturesData.forEach( lectureData => new Lecture(lectureData))).then(event => App.renderCurrentUserLecturesForMenuContainer())
+    Adapter.getCurrentUsersLectures().then( lecturesData => lecturesData.forEach( lectureData => new Lecture(lectureData))).then(event => App.renderCurrentUserLecturesForMenuContainer())
   }
 
   static renderCurrentUserLecturesForMenuContainer() {
     App.menuContainer.innerHTML += `${Lecture.all().map( lecture => lecture.renderLectureForMenuContainer() ).join('')}`
     App.menuContainer.innerHTML += `${App.currentUser.renderNewLectureButtonForMenuContainer()}`
+  }
+
+  static createAllNotebooks() {
+    Adapter.getNotebooks().then( notebooksData => notebooksData.forEach( notebookData => new Notebook(notebookData)))
   }
 
   static signupEvent(event) {

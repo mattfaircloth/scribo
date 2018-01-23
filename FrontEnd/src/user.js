@@ -4,8 +4,6 @@ const User = (function() {
   constructor({id, name}){
     this.id = id
     this.name = name
-    this.lectures = []
-    this.notebooks = []
     all.push(this)
   }
 
@@ -20,8 +18,6 @@ const User = (function() {
   renderNewLectureButtonForMenuContainer(){
     return `<button type="button" id="create-new-lecture-button" data-action="create-a-lecture">Create A Lecture</button>`
   }
-
-
 
 }
 })();

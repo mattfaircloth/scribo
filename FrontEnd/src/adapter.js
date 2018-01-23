@@ -10,6 +10,11 @@ class Adapter {
     .then(resp => resp.json())
   }
 
+  static getNotebooks(){
+    return fetch("http://localhost:3000/api/v1/notebooks")
+    .then(resp => resp.json())
+  }
+
 
   static createUsers({passedInName}){
     return fetch("http://localhost:3000/api/v1/users", {
@@ -24,11 +29,11 @@ class Adapter {
     }).then(resp => resp.json())
   }
 
-  static getCurrentUsersSelectedLectureNotebook(lectureId) {
-    return fetch(`http://localhost:3000/api/v1/users/${App.currentUser.id}/notebooks`, {
-
-    })
-  }
+  // static getCurrentUsersSelectedLectureNotebook(lectureId) {
+  //   return fetch(`http://localhost:3000/api/v1/users/${App.currentUser.id}/notebooks`, {
+  //
+  //   })
+  //}
 
 
   // static updateUsers(passedInName){
@@ -77,21 +82,21 @@ class Adapter {
     }).then(resp => resp.json())
   }
 
-  static updateLectures(){
-  }
-
-  static deleteLectures(){
-  }
-
-
-
-  static getNotebooks(){
-  }
-
-  static updateNotebooks(){
-  }
-
-  static deleteNotebooks(){
-  }
+  // static updateLectures(){
+  // }
+  //
+  // static deleteLectures(){
+  // }
+  //
+  //
+  //
+  // static getNotebooks(){
+  // }
+  //
+  // static updateNotebooks(){
+  // }
+  //
+  // static deleteNotebooks(){
+  // }
 
 }

@@ -5,9 +5,9 @@ const Lecture = (function() {
     this.title = title
     this.date_time = date_time
     this.id = id
-    this.users = []
-    this.notebooks = []
     all.push(this)
+    this.notebooks = Notebook.all().filter(notebook => notebook.lectureId === this.id)
+    this.users = this.notebooks.map(notebook => notebook.userId).map(userId => User.all().find(user => user.id == userId))
   }
 
   static all() {
