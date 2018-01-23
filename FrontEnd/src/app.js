@@ -62,6 +62,7 @@ class App {
 
   static renderCurrentUserLecturesForMenuContainer() {
     App.menuContainer.innerHTML += `${Lecture.all().map( lecture => lecture.renderLectureForMenuContainer() ).join('')}`
+    App.menuContainer.innerHTML += `${App.currentUser.renderNewLectureButtonForMenuContainer()}`
   }
 
   static signupEvent(event) {
