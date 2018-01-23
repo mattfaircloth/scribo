@@ -17,6 +17,8 @@ end
 User.all.each do
   |user|
   user.lectures.push(Lecture.all.sample)
+  user.lectures.push(Lecture.all.sample)
+  user.lectures.push(Lecture.all.sample)
 end
 
 Notebook.all.each do

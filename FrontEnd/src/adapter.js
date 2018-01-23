@@ -24,6 +24,12 @@ class Adapter {
     }).then(resp => resp.json())
   }
 
+  static getCurrentUsersSelectedLectureNotebook(lectureId) {
+    return fetch(`http://localhost:3000/api/v1/users/${App.currentUser.id}/notebooks`, {
+
+    })
+  }
+
 
   // static updateUsers(passedInName){
   //   return fetch(`http://localhost:3000/api/v1/users/1`, {

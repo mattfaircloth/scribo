@@ -14,8 +14,8 @@ const Lecture = (function() {
     return all
   }
 
-  renderLectureForNotebookContainer(){
-    return `<div id="lecture-${this.id}">${this.title} - ${this.date_time}</div>`
+  renderLectureForMenuContainer(){
+    return `<div class="lecture-link" id="lecture-${this.id}" data-lectureid="${this.id}" data-action="click-lecture">Lecture: ${this.title} - Date: ${this.date_time}</div>`
   }
 
 }
