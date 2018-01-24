@@ -193,3 +193,8 @@ body {
   font-weight: bold;
   color: rgb(54, 54, 71);
 }
+
+#home-button-container {
+  grid-row: 1;
+  grid-column: 1;
+}

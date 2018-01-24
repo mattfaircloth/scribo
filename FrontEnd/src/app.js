@@ -15,6 +15,7 @@ class App {
     App.notebookContainer = document.getElementById("notebook")
     App.masterContainer = document.getElementById("master")
     App.menuContainer = document.getElementById("menu")
+    App.homeButtonContainer = document.getElementById("home-button-container")
   }
 
   static pageListeners() {
@@ -22,15 +23,17 @@ class App {
   }
 
   static lectureClickEvent(event) {
+    console.log(event)
     if (event.target.dataset.action === "click-lecture") {
       event.preventDefault()
       const selectedLecture = Lecture.all().find(lecture => lecture.id == event.target.dataset.lectureid)
-      const currentNotebook = Notebook.all().find(notebook => notebook.lecture === selectedLecture)
-      debugger;
-      App.notebookContainer.innerHTML = currentNotebook.renderNotebookForNotebookContainer();
+      const usersNotebook = selectedLecture.notebooks.find(notebook => notebook.userId === App.currentUser.id)
+      App.notebookContainer.innerHTML = `${selectedLecture.renderLectureForMenuContainer()}`
+      App.notebookContainer.innerHTML += usersNotebook.renderNotebookForNotebookContainer();
 
       //Create functionality to display Users in MenuContainer,
-      //App.menuContainer.innerHTML = selectedLecture.users
+       App.menuContainer.innerHTML = `${selectedLecture.renderLectureForMenuContainer()}`
+       selectedLecture.users.forEach(user => App.menuContainer.innerHTML += user.renderUsersforMenuContainer())
 
     }
     else if (event.target.dataset.action === "create-a-lecture") {
@@ -63,7 +66,11 @@ class App {
   }
 
   static createAllCurrentUserLectures() {
-    Adapter.getCurrentUsersLectures().then( lecturesData => lecturesData.forEach( lectureData => new Lecture(lectureData))).then(event => App.handleWelcomeAndCurrentUserLecturesForMenuContainer())
+    Adapter.getCurrentUsersLectures()
+    .then( lecturesData => lecturesData.forEach( lectureData => new Lecture(lectureData)))
+    .then(event => App.handleWelcomeAndCurrentUserLecturesForMenuContainer())
+    .then(event => App.handleRenderHomeButton())
+
   }
 
   static handleWelcomeAndCurrentUserLecturesForMenuContainer() {
@@ -87,6 +94,36 @@ class App {
   static signupEvent(event) {
     event.preventDefault()
     console.log("NOT IMPLEMENTED");
+  }
+
+  static renderLogoForNotebookContainer() {
+    return `<div id="logo-container">
+      <div id="logo-right-paren">(</div>
+      <div id="logo-left-paren">)</div>
+      <div id="logo-float-paren">)</div>
+      <div id="logo-sribio">Scribo
+      <div id="slogan">write, remember – learn together</div></div>
+    </div>`
+  }
+
+  static renderHomeButton() {
+    return `<button type="button" id="home-button">Home</button>`
+  }
+
+  static handleRenderHomeButton() {
+    App.homeButtonContainer.innerHTML = App.renderHomeButton()
+    App.homeButton = document.getElementById("home-button")
+    App.homeButton.addEventListener('click', event => App.homeButtonClickEvent(event))
+  }
+
+  static handleRenderLogoForNotebookContainer() {
+    App.notebookContainer.innerHTML = App.renderLogoForNotebookContainer()
+  }
+
+  static homeButtonClickEvent(event) {
+    event.preventDefault()
+    App.handleWelcomeAndCurrentUserLecturesForMenuContainer()
+    App.handleRenderLogoForNotebookContainer()
   }
 
 

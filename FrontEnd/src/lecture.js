@@ -18,6 +18,8 @@ const Lecture = (function() {
     return `<div class="lecture-link" id="lecture-${this.id}" data-lectureid="${this.id}" data-action="click-lecture">Lecture: ${this.title} - Date: ${this.date_time}</div>`
   }
 
+
+
   static renderCreateLectureFormForNotebookContainer(){
     return `<div class="create-lecture-form"
               <br><br><br>
