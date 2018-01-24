@@ -194,7 +194,7 @@ body {
   color: rgb(54, 54, 71);
 }
 
-#home-button-container {
-  grid-row: 1;
-  grid-column: 1;
+#home-button {
+  grid-row: 0;
+  grid-column: 0;
 }

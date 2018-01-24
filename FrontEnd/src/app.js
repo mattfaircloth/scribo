@@ -1,6 +1,7 @@
 class App {
   static init() {
     App.createAllExistingUsers();
+    App.createAllNotebooks()
     App.pageElements();
     App.pageListeners();
     App.loginSignupElements();
@@ -23,7 +24,6 @@ class App {
   }
 
   static lectureClickEvent(event) {
-    console.log(event)
     if (event.target.dataset.action === "click-lecture") {
       event.preventDefault()
       const selectedLecture = Lecture.all().find(lecture => lecture.id == event.target.dataset.lectureid)
@@ -57,7 +57,6 @@ class App {
   static loginEvent(event) {
     event.preventDefault()
     App.setCurrentUser(App.loginName.value)
-    App.createAllNotebooks()
     App.createAllCurrentUserLectures()
   }
 
@@ -70,7 +69,6 @@ class App {
     .then( lecturesData => lecturesData.forEach( lectureData => new Lecture(lectureData)))
     .then(event => App.handleWelcomeAndCurrentUserLecturesForMenuContainer())
     .then(event => App.handleRenderHomeButton())
-
   }
 
   static handleWelcomeAndCurrentUserLecturesForMenuContainer() {
@@ -110,8 +108,13 @@ class App {
     return `<button type="button" id="home-button">Home</button>`
   }
 
+  static renderLogoutButton() {
+    return `<button type="button" id="logout-button">Logout</button>`
+  }
+
+
   static handleRenderHomeButton() {
-    App.homeButtonContainer.innerHTML = App.renderHomeButton()
+    App.masterContainer.insertAdjacentHTML('beforeend', App.renderHomeButton())
     App.homeButton = document.getElementById("home-button")
     App.homeButton.addEventListener('click', event => App.homeButtonClickEvent(event))
   }
