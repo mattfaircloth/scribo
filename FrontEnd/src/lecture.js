@@ -20,7 +20,7 @@ const Lecture = (function() {
 
 
 
-  static renderCreateLectureFormForNotebookContainer(){
+  static renderCreateLectureFormForMenuContainer(){
     return `<div class="create-lecture-form"
               <br><br><br>
               <input type="text" id="new-lecture-title" placeholder="Title"><br>

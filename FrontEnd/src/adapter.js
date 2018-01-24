@@ -15,19 +15,46 @@ class Adapter {
     .then(resp => resp.json())
   }
 
-
-  static createUsers({passedInName}){
-    return fetch("http://localhost:3000/api/v1/users", {
+  static createLecture(lecTitle, lecDate, user_id){
+    return fetch("http://localhost:3000/api/v1/lectures", {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json'
       },
       body: JSON.stringify({
-        name: passedInName
+        title: lecTitle,
+        date_time: lecDate,
+        admin_id: user_id
       })
     }).then(resp => resp.json())
   }
+
+  static getNotebooksForLecture(lecture) {
+    return fetch(`http://localhost:3000/api/v1/lectures/${lecture.id}/notebooks`)
+    .then(resp => resp.json())
+  }
+
+  static getUsersForLecture(lecture) {
+    return fetch(`http://localhost:3000/api/v1/lectures/${lecture.id}/users`)
+    .then(resp => resp.json())
+  }
+
+  // static createUsers({passedInName}){
+  //   return fetch("http://localhost:3000/api/v1/users", {
+  //     method: "POST",
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       Accept: 'application/json'
+  //     },
+  //     body: JSON.stringify({
+  //       name: passedInName
+  //     })
+  //   }).then(resp => resp.json())
+  // }
+  //
+  // static getLectures(){
+  // }
 
   // static getCurrentUsersSelectedLectureNotebook(lectureId) {
   //   return fetch(`http://localhost:3000/api/v1/users/${App.currentUser.id}/notebooks`, {
@@ -59,28 +86,6 @@ class Adapter {
   //     }
   //   }).then(resp => resp.json())
   // }
-
-
-
-
-
-  static getLectures(){
-  }
-
-  static createLectures(lecTitle, lecDate, user_id){
-    return fetch("http://localhost:3000/api/v1/lectures", {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json'
-      },
-      body: JSON.stringify({
-        title: lecTitle,
-        date_time: lecDate,
-        admin_id: user_id
-      })
-    }).then(resp => resp.json())
-  }
 
   // static updateLectures(){
   // }

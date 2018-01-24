@@ -1,11 +1,11 @@
 class App {
   static init() {
-    App.createAllExistingUsers();
+    App.createAllExistingUsers()
     App.createAllNotebooks()
-    App.pageElements();
-    App.pageListeners();
-    App.loginSignupElements();
-    App.loginSignupListeners();
+    App.pageElements()
+    App.pageListeners()
+    App.loginSignupElements()
+    App.loginSignupListeners()
   }
 
   static createAllExistingUsers() {
@@ -28,18 +28,60 @@ class App {
       event.preventDefault()
       const selectedLecture = Lecture.all().find(lecture => lecture.id == event.target.dataset.lectureid)
       const usersNotebook = selectedLecture.notebooks.find(notebook => notebook.userId === App.currentUser.id)
-      App.notebookContainer.innerHTML = `${selectedLecture.renderLectureForMenuContainer()}`
-      App.notebookContainer.innerHTML += usersNotebook.renderNotebookForNotebookContainer();
-
-      //Create functionality to display Users in MenuContainer,
-       App.menuContainer.innerHTML = `${selectedLecture.renderLectureForMenuContainer()}`
-       selectedLecture.users.forEach(user => App.menuContainer.innerHTML += user.renderUsersforMenuContainer())
+      App.handleRenderLecture(selectedLecture, usersNotebook)
+      selectedLecture.users.forEach(user => App.menuContainer.innerHTML += user.renderUsersforMenuContainer())
 
     }
     else if (event.target.dataset.action === "create-a-lecture") {
       event.preventDefault()
-      App.createNewLecture()
+      App.handleRenderNewLectureFormForMenuContainer()
+      App.newLectureElements()
+      App.newLectureListeners()
     }
+  }
+
+  static handleRenderNewLectureFormForMenuContainer() {
+    App.menuContainer.innerHTML = Lecture.renderCreateLectureFormForMenuContainer()
+  }
+
+  static newLectureElements() {
+    App.newLectureSubmitButton = document.getElementById("new-lecture-button-submit")
+    App.newLectureTitle = document.getElementById("new-lecture-title")
+    App.newLectureDate = document.getElementById("new-lecture-date")
+  }
+
+  static newLectureListeners(){
+    App.newLectureSubmitButton.addEventListener("click", (event)=>{
+      Adapter.createLecture(App.newLectureTitle.value, App.newLectureDate.value, App.currentUser.id)
+        .then( res => {
+          App.deleteObjectsStoredInFrontEnd()
+          App.rerequestAllObjects()
+        }).then( res => App.handleWelcomeAndCurrentUserLecturesForMenuContainer() )
+
+  })}
+
+  static deleteObjectsStoredInFrontEnd(){
+    Lecture.all().length = 0
+    User.all().length = 0
+    Notebook.all().length = 0
+  }
+
+  static rerequestAllObjects() {
+    App.createAllExistingUsers()
+    App.createAllNotebooks()
+    App.createAllCurrentUserLectures()
+  }
+
+  static handleRenderNewLecture(lecture) {
+    App.notebookContainer.innerHTML = lecture.renderLectureForMenuContainer()
+    App.notebookContainer.innerHTML += "BLANK NOTEBOOK"
+    App.menuContainer.innerHTML = lecture.renderLectureForMenuContainer()
+  }
+
+  static handleRenderLecture(lecture, notebook) {
+    App.notebookContainer.innerHTML = lecture.renderLectureForMenuContainer()
+    App.notebookContainer.innerHTML += notebook.renderNotebookForNotebookContainer();
+    App.menuContainer.innerHTML = lecture.renderLectureForMenuContainer()
   }
 
   static loginSignupElements() {
@@ -58,6 +100,7 @@ class App {
     event.preventDefault()
     App.setCurrentUser(App.loginName.value)
     App.createAllCurrentUserLectures()
+    App.handleRenderHomeButton()
   }
 
   static setCurrentUser(loginValue) {
@@ -66,14 +109,13 @@ class App {
 
   static createAllCurrentUserLectures() {
     Adapter.getCurrentUsersLectures()
-    .then( lecturesData => lecturesData.forEach( lectureData => new Lecture(lectureData)))
-    .then(event => App.handleWelcomeAndCurrentUserLecturesForMenuContainer())
-    .then(event => App.handleRenderHomeButton())
+    .then( lecturesData => lecturesData.forEach( lectureData => {const lecture = new Lecture(lectureData)}) )
+    .then( res => App.handleWelcomeAndCurrentUserLecturesForMenuContainer() )
   }
 
   static handleWelcomeAndCurrentUserLecturesForMenuContainer() {
     App.menuContainer.innerHTML = App.renderForWelcomeForMenuContainer()
-    App.menuContainer.innerHTML += `${Lecture.all().map( lecture => lecture.renderLectureForMenuContainer() ).join('')}`
+    App.menuContainer.innerHTML += `${Lecture.all().map( lecture => lecture.renderLectureForMenuContainer() ).reverse().join('')}`
     App.menuContainer.innerHTML += `${App.renderNewLectureButtonForMenuContainer()}`
   }
 
@@ -128,26 +170,6 @@ class App {
     App.handleWelcomeAndCurrentUserLecturesForMenuContainer()
     App.handleRenderLogoForNotebookContainer()
   }
-
-
-
-  // static methods for creating a new lecture
-
-  static createNewLecture(){
-    App.menuContainer.innerHTML = Lecture.renderCreateLectureFormForNotebookContainer()
-    App.newLectureSubmitButton = document.getElementById("new-lecture-button-submit")
-    App.newLectureTitle = document.getElementById("new-lecture-title")
-    App.newLectureDate = document.getElementById("new-lecture-date")
-
-    App.newLectureSubmitButton.addEventListener("click", (event)=>{
-      Adapter.createLectures(App.newLectureTitle.value, App.newLectureDate.value, App.currentUser.id).then( data => new Lecture(data))
-    })
-
-
-    // App.newLectureTitle = document.getElementById("new-lecture-title")
-    // App.newLectureDate = document.getElementById("new-lecture-date")
-  }
-
 
 
 }

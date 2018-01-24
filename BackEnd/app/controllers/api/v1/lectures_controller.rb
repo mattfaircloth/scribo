@@ -26,6 +26,11 @@ class Api::V1::LecturesController < ApplicationController
     render json: @notebooks
   end
 
+  def users
+    @users = Lecture.find(params[:id]).users
+    render json: @users
+  end
+
   def update
     @lecture = Lecture.find(params[:id])
 
