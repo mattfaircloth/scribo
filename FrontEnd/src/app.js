@@ -30,13 +30,6 @@ class App {
       const usersNotebook = selectedLecture.notebooks.find(notebook => notebook.userId === App.currentUser.id)
       App.handleRenderLecture(selectedLecture, usersNotebook)
       selectedLecture.users.forEach(user => App.menuContainer.innerHTML += user.renderUsersforMenuContainer())
-
-    }
-    else if (event.target.dataset.action === "create-a-lecture") {
-      event.preventDefault()
-      App.handleRenderNewLectureFormForMenuContainer()
-      App.newLectureElements()
-      App.newLectureListeners()
     }
   }
 
@@ -80,7 +73,7 @@ class App {
 
   static handleRenderLecture(lecture, notebook) {
     App.notebookContainer.innerHTML = lecture.renderLectureForMenuContainer()
-    App.notebookContainer.innerHTML += notebook.renderNotebookForNotebookContainer();
+    App.notebookContainer.innerHTML += notebook.renderNotebookForNotebookContainer()
     App.menuContainer.innerHTML = lecture.renderLectureForMenuContainer()
   }
 
@@ -100,7 +93,7 @@ class App {
     event.preventDefault()
     App.setCurrentUser(App.loginName.value)
     App.createAllCurrentUserLectures()
-    App.handleRenderHomeButton()
+    App.handleRenderMenu()
   }
 
   static setCurrentUser(loginValue) {
@@ -114,17 +107,18 @@ class App {
   }
 
   static handleWelcomeAndCurrentUserLecturesForMenuContainer() {
-    App.menuContainer.innerHTML = App.renderForWelcomeForMenuContainer()
-    App.menuContainer.innerHTML += `${Lecture.all().map( lecture => lecture.renderLectureForMenuContainer() ).reverse().join('')}`
-    App.menuContainer.innerHTML += `${App.renderNewLectureButtonForMenuContainer()}`
+    App.menuContainer.innerHTML = App.renderForHome()
+    const userLecturesContainer = document.getElementById("user-lectures")
+    userLecturesContainer.innerHTML = Lecture.all().map( lecture => lecture.renderLectureForMenuContainer() ).reverse().join('')
   }
 
-  static renderForWelcomeForMenuContainer(){
-    return `<div id="welcome-message">Welcome,<br /><span id="welcome-user-name">${App.currentUser.name}</span>!</div>Your lectures:`
-  }
-
-  static renderNewLectureButtonForMenuContainer(){
-    return `<button type="button" id="create-new-lecture-button" data-action="create-a-lecture">Create A Lecture</button>`
+  static renderForHome(){
+    return `<div id="home-container">
+            <div id="menu-header">Welcome,<br />
+            <span id="menu-header-strong">${App.currentUser.name}</span>
+            </div>
+            <div id="your-lectures-text">Your lectures:</div>
+            <div id="user-lectures"></div></div>`
   }
 
   static createAllNotebooks() {
@@ -147,18 +141,42 @@ class App {
   }
 
   static renderHomeButton() {
-    return `<button type="button" id="home-button">Home</button>`
+    return `<button type="button" id="home-button" title='Home'>
+              <i class="material-icons vw">home</i>
+            </button>`
+  }
+
+  static renderNewLectureButton() {
+    return `<button type="button" id="create-new-lecture-button" title='Host a New Lecture'>
+              <i class="material-icons vw">speaker_notes</i>
+            </button>`
   }
 
   static renderLogoutButton() {
-    return `<button type="button" id="logout-button">Logout</button>`
+    return `<button type="button" id="logout-button" title='Sign Out'>
+              <i class="material-icons vw">exit_to_app</i>
+            </button>`
+  }
+
+  static renderArchiveButton() {
+    return `<button type="button" id="archive-button" title='Lecture Archive'>
+              <i class="material-icons vw">archive</i>
+            </button>`
   }
 
 
-  static handleRenderHomeButton() {
+  static handleRenderMenu() {
     App.masterContainer.insertAdjacentHTML('beforeend', App.renderHomeButton())
     App.homeButton = document.getElementById("home-button")
     App.homeButton.addEventListener('click', event => App.homeButtonClickEvent(event))
+
+    App.masterContainer.insertAdjacentHTML('beforeend', App.renderNewLectureButton())
+    App.newLectureButton = document.getElementById("create-new-lecture-button")
+    App.newLectureButton.addEventListener('click', event => App.newLectureButtonClickEvent(event))
+
+    App.masterContainer.insertAdjacentHTML('beforeend', App.renderArchiveButton())
+
+    App.masterContainer.insertAdjacentHTML('beforeend', App.renderLogoutButton())
   }
 
   static handleRenderLogoForNotebookContainer() {
@@ -171,5 +189,11 @@ class App {
     App.handleRenderLogoForNotebookContainer()
   }
 
+  static newLectureButtonClickEvent(event) {
+    event.preventDefault()
+    App.handleRenderNewLectureFormForMenuContainer()
+    App.newLectureElements()
+    App.newLectureListeners()
+  }
 
 }

@@ -1,6 +1,10 @@
 /* font-family: 'Comfortaa', cursive; */
 /* font-family: 'Merriweather', serif; */
 
+.material-icons.vw { font-size: 2vw; }
+.material-icons.vw-bigger { font-size: 2.5vw; }
+.material-icons.vw-smaller { font-size: 1.5vw; }
+
 body {
   background-color: rgb(54, 54, 71);
   background: linear-gradient(rgb(54, 54, 71) 75%, rgb(37, 37, 50));
@@ -16,7 +20,7 @@ body {
   width: 100%;
   height: 100%;
   display:grid;
-  grid-template-columns: 5% 55% 5% auto 5%;;
+  grid-template-columns: 5% 55% 5% auto 5%;
   grid-template-rows: 5% 5% auto 5%;
 }
 
@@ -35,14 +39,12 @@ body {
 #menu {
   grid-row: 3;
   grid-column: 4;
-  padding: 5px;
   text-align: center;50%;
   background-color: rgb(255, 254, 245);
   background: linear-gradient(rgb(255, 254, 245) 75%, rgb(237, 236, 226));
   background-attachment: fixed;
   box-shadow:10px 10px 20px rgb(44, 44, 55);
-
-  font-size: font-size: 1.5vw;
+  font-size: 1.5vw;
 }
 
 #logo-container {
@@ -118,8 +120,8 @@ body {
   border-bottom-style: solid;
   border-color: rgb(54, 54, 71);
   border-width: 1px;
-  margin: 1.5vmin;
-  margin-top: 3vmin;
+  margin: 1.5%;
+  margin-top: 3%;
   width: 15vw;
 }
 
@@ -130,14 +132,14 @@ body {
   font-size: 1.25vw;
   font-family: 'Merriweather', serif;
   box-shadow:2px 2px 10px rgba(0, 0, 0, 0.15);
-  margin: 1.5vmin;
-  margin-top: 3vmin;
+  margin: 1.5%;
+  margin-top: 3%;
   width: 15vw;
   height: 3vw;
 }
 
 #signup-button {
-  margin-top: 1.5vmin;
+  margin-top: 1.5%;
   font-size: 1.15vw;
   width: 10vw;
   height: 2.5vw;
@@ -149,11 +151,33 @@ body {
   cursor: pointer;
 }
 
+#login-submit:hover {
+  width: 15.2vw;
+  height: 3.2vw;
+  box-shadow:4px 4px 10px rgba(0, 0, 0, 0.1);
+  font-size: 1.35vw;
+}
+
+#signup-button:hover {
+  width: 10.2vw;
+  height: 2.7vw;
+  box-shadow:4px 4px 10px rgba(0, 0, 0, 0.1);
+  font-size: 1.18vw;
+}
+
 #login-submit:active, #signup-button:active {
   box-shadow:1px 1px 10px rgba(0, 0, 0, 0.4);
 }
 
 #login-name:focus, #login-password:focus, #login-submit:focus, #signup-button:focus {
+  outline: none;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+button:focus {
   outline: none;
 }
 
@@ -183,18 +207,141 @@ body {
   font-size: 1.25vw;
 }
 
-#welcome-message {
-  font-size: 4vw;
-  margin-top: 4vh;
-  margin-bottom: 4vh;
+#menu-header {
+  font-size: 3vw;
+  margin-top: 14%;
+  margin-bottom: 4%;
+  flex: 0;
 }
 
-#welcome-user-name {
+#menu-header-strong {
   font-weight: bold;
-  color: rgb(54, 54, 71);
+  color: rgb(81, 81, 107);
+}
+
+#home-button, #create-new-lecture-button, #logout-button, #archive-button {
+  background: transparent;
+  border: none;
+  position: absolute;
+  color: rgb(232, 198, 152);
+}
+
+#home-button:hover {
+  color: rgb(141, 141, 185);
+}
+
+#create-new-lecture-button:hover {
+  color: rgb(92, 221, 112);
+}
+
+#logout-button:hover {
+  color: rgb(207, 87, 87);
+}
+
+#archive-button:hover {
+  color: rgb(103, 175, 235);
 }
 
 #home-button {
-  grid-row: 0;
-  grid-column: 0;
+  top: 11.5%;
+  right: 31.5%;
+}
+
+#archive-button {
+  top: 11.5%;
+  right: 28.8%;
+}
+
+#create-new-lecture-button {
+  top: 11.5%;
+  right: 26%;
+}
+
+#logout-button {
+  top: 11.5%;
+  right: 5.5%;
+}
+
+#home-container {
+  position:absolute;
+  width: 30%;
+  height: 85%;
+  display: flex;
+  flex-direction: column;
+}
+
+#your-lectures-text {
+  font-size: 2vw;
+  flex: 0;
+}
+
+#user-lectures {
+  height: inherit;
+  overflow: scroll;
+  flex: 2;
+  margin: 1%;
+}
+
+.menu-lecture-container {
+  display: grid;
+  grid-template-columns: 95% 5%;
+  grid-template-rows: 95% 25%;
+  background-color: rgb(232, 198, 152);
+  background: linear-gradient(rgb(232, 198, 152) 50%, rgb(237, 207, 166));
+  box-shadow:1px 1px 2px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  margin-bottom: 2%;
+  margin-left: 3%;
+  padding: 2%;
+  position: relative;
+}
+
+.menu-lecture-container:hover {
+  background-color: rgb(232, 198, 152);
+  background: linear-gradient(rgb(241, 210, 169) 50%, rgb(245, 217, 180));
+  box-shadow:2px 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 3%;
+  margin-bottom: 3%;
+  margin-left: 2%;
+  width: 92%;
+  cursor: pointer;
+}
+
+.menu-lecture-title {
+  grid-row: 1;
+  grid-column: 1;
+  font-size: 2.75vmin;
+  text-align: left;
+  font-weight: bold;
+  height: 3vh;
+}
+
+.menu-lecture-date {
+  grid-row: 2;
+  grid-column: 1;
+  font-size: 2vmin;
+  text-align: left;
+  font-style: italic;
+  margin-left: 2%;
+}
+
+.menu-lecture-archive {
+  grid-row-start: 1;
+  grid-row-end: 3;
+  grid-column: 2;
+  align: right;
+}
+
+.menu-lecture-archive-button {
+  color: rgb(166, 150, 127);
+  background: transparent;
+  border: none;
+  padding: 2%;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.menu-lecture-archive-button:hover {
+  color: rgb(103, 175, 235);
 }

@@ -15,13 +15,18 @@ const Lecture = (function() {
   }
 
   renderLectureForMenuContainer(){
-    return `<div class="lecture-link" id="lecture-${this.id}" data-lectureid="${this.id}" data-action="click-lecture">Lecture: ${this.title} - Date: ${this.date_time}</div>`
+    return `<div class="menu-lecture-container" id="menu-lecture-container-${this.id}" data-lectureid="${this.id}" data-action="click-lecture">
+              <div class="menu-lecture-title" data-lectureid="${this.id}" data-action="click-lecture">${this.title}</div>
+              <div class="menu-lecture-date" data-lectureid="${this.id}" data-action="click-lecture">${this.date_time}</div>
+              <div class="menu-lecture-archive">
+                <button type="button" id="menue-archive-button-${this.id}" class="menu-lecture-archive-button" title="Archive Lecture" data-lectureid="${this.id}" data-action="archive-lecture">
+                <i class="material-icons vw-smaller">archive</i>
+                </button></div>
+            </div>`
   }
 
-
-
   static renderCreateLectureFormForMenuContainer(){
-    return `<div class="create-lecture-form"
+    return `<div class="create-lecture-form">
               <br><br><br>
               <input type="text" id="new-lecture-title" placeholder="Title"><br>
               <input type="text" id="new-lecture-date" placeholder="Date"><br><br>
