@@ -1,5 +1,8 @@
 class App {
   static init() {
+    if (toekn) {
+      render home
+    } else {}
     App.createAllExistingUsers()
     App.createAllNotebooks()
     App.pageElements()
@@ -7,6 +10,8 @@ class App {
     App.loginSignupElements()
     App.loginSignupListeners()
   }
+
+  checklocal storange
 
   static createAllExistingUsers() {
     Adapter.getUsers().then( usersData => usersData.forEach( userData => new User(userData)))
@@ -157,6 +162,7 @@ class App {
   static loginSignupElements() {
     App.loginForm = document.getElementById("login-form")
     App.loginName = document.getElementById("login-name")
+    App.loginPassword = document.getElementById("login-password")
     App.signupButton = document.getElementById("signup-button")
   }
 
@@ -168,7 +174,8 @@ class App {
 
   static loginEvent(event) {
     event.preventDefault()
-    App.setCurrentUser(App.loginName.value)
+    const loginParams = {name: App.loginName.value, password: App.loginPassword.value}
+    App.setCurrentUser()
     App.createAllCurrentUserLectures()
     App.handleRenderMenu()
   }
@@ -272,40 +279,5 @@ class App {
     App.newLectureElements()
     App.newLectureListeners()
   }
-
-  logIn(loginParams){
-  Auth.login(loginParams)
-    .then( user => {
-      if (!user.error) {
-        this.setState({
-          auth: { isLoggedIn: true, user: user}
-        })
-        localStorage.setItem('jwt', user.jwt )
-      }
-    })
-  }
-
-  logout(){
-   localStorage.removeItem('jwt')
-   this.setState({ auth: { isLoggedIn: false, user:{}}})
-  }
-
-  componentWillMount(){
-      if (localStorage.getItem('jwt')) {
-       Auth.currentUser()
-         .then(user => {
-           if (!user.error) {
-             console.log("fetch user");
-             this.setState({
-               auth: {
-                 isLoggedIn: true,
-                 user: user
-               }
-             })
-           }
-         })
-     }
-   }
-
 
 }
