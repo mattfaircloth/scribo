@@ -9,15 +9,14 @@ class Api::V1::NotebooksController < ApplicationController
    render json: @notebook
   end
 
-  # def create
-  #   @notebook = Notebook.new(notebook_params)
-  #
-  #   if @notebook.save
-  #     render json: @notebook
-  #   else
-  #     render json: {errors: @notebook.errors.full_messages}, status: 422
-  #   end
-  # end
+  def create
+    @notebook = Notebook.new(notebook_params)
+    if @notebook.save
+      render json: @notebook
+    else
+      render json: {errors: @notebook.errors.full_messages}, status: 422
+    end
+  end
 
   def update
     @notebook = Notebook.find(params[:id])

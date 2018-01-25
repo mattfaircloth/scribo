@@ -26,32 +26,64 @@ class App {
   static lectureClickEvent(event) {
     if (event.target.dataset.action === "click-lecture") {
       event.preventDefault()
-      const selectedLecture = Lecture.all().find(lecture => lecture.id == event.target.dataset.lectureid)
-      const usersNotebook = selectedLecture.notebooks.find(notebook => notebook.userId === App.currentUser.id)
-      App.handleRenderLecture(selectedLecture, usersNotebook)
-      selectedLecture.users.forEach(user => App.menuContainer.innerHTML += user.renderUsersforMenuContainer())
+      App.currentSelectedLecture = Lecture.all().find(lecture => lecture.id == event.target.dataset.lectureid)
+      let usersNotebook = App.currentSelectedLecture.notebooks.find(notebook => notebook.userId === App.currentUser.id)
+      App.handleRenderNotebook(App.currentSelectedLecture, usersNotebook)
+
     }
   }
 
   static handleRenderNewLectureFormForMenuContainer() {
-    App.menuContainer.innerHTML = Lecture.renderCreateLectureFormForMenuContainer()
+    App.handleRenderLogoForNotebookContainer()
+    App.menuContainer.innerHTML = App.renderCreateLectureFormForMenuContainer()
+    $( "#users-search" ).autocomplete({
+      source: User.allNames()
+    });
   }
 
+  static renderCreateLectureFormForMenuContainer(){
+    return `<div id=>
+            <div id="create-lecture-form">
+              <input type="text" id="new-lecture-title" placeholder="Title"><br>
+              <input type="text" id="new-lecture-date" placeholder="Date"><br><br>
+              <input id="users-search">
+              <button type="button" id="add-user-button"><i class="material-icons vw-smaller">add_box</i></button><br><br>
+              <div id="users-to-add"></div>
+              <button type="button" id="new-lecture-button-submit">Create Lecture</button>
+            </div>`
+  }
+
+
   static newLectureElements() {
+    App.newLectureAddUserButton = document.getElementById("add-user-button")
+    App.newLectureAddUserInput = document.getElementById("users-search")
+    App.newLectureUsersToAddContainer = document.getElementById("users-to-add")
     App.newLectureSubmitButton = document.getElementById("new-lecture-button-submit")
     App.newLectureTitle = document.getElementById("new-lecture-title")
     App.newLectureDate = document.getElementById("new-lecture-date")
+    App.arrOfUsersToAdd = []
   }
 
   static newLectureListeners(){
     App.newLectureSubmitButton.addEventListener("click", (event)=>{
       Adapter.createLecture(App.newLectureTitle.value, App.newLectureDate.value, App.currentUser.id)
+        .then(json => App.arrOfUsersToAdd.forEach( user => Adapter.createNotebooksForNewLecture(user.id, json.id)
         .then( res => {
           App.deleteObjectsStoredInFrontEnd()
           App.rerequestAllObjects()
-        }).then( res => App.handleWelcomeAndCurrentUserLecturesForMenuContainer() )
+        }).then( res => App.handleWelcomeAndCurrentUserLecturesForMenuContainer() )))
+    })
 
-  })}
+    App.newLectureAddUserButton.addEventListener("click", event => App.addUserButtonEvent(event))
+  }
+
+  static addUserButtonEvent(event) {
+    event.preventDefault();
+    const userToAdd = User.all().find(user => user.name == App.newLectureAddUserInput.value)
+    const userToAddName = userToAdd.name
+    App.newLectureUsersToAddContainer.insertAdjacentHTML('beforeend', userToAdd.renderForAddUser())
+    App.arrOfUsersToAdd.push(userToAdd)
+  }
 
   static deleteObjectsStoredInFrontEnd(){
     Lecture.all().length = 0
@@ -65,16 +97,61 @@ class App {
     App.createAllCurrentUserLectures()
   }
 
-  static handleRenderNewLecture(lecture) {
-    App.notebookContainer.innerHTML = lecture.renderLectureForMenuContainer()
-    App.notebookContainer.innerHTML += "BLANK NOTEBOOK"
-    App.menuContainer.innerHTML = lecture.renderLectureForMenuContainer()
+  static handleRenderNotebook(lecture, notebook) {
+    App.notebookContainer.innerHTML = notebook.renderNotebookForNotebookContainer()
+    App.menuContainer.innerHTML = lecture.renderLectureForNotebookMenuContainer()
+    App.notebookListeners()
   }
 
-  static handleRenderLecture(lecture, notebook) {
-    App.notebookContainer.innerHTML = lecture.renderLectureForMenuContainer()
-    App.notebookContainer.innerHTML += notebook.renderNotebookForNotebookContainer()
-    App.menuContainer.innerHTML = lecture.renderLectureForMenuContainer()
+  static notebookListeners() {
+    App.notebookTextArea = document.getElementById("notebook-textarea")
+    App.notebookTextArea.addEventListener('keyup', event => App.autoSaveNotebookEvent(event))
+    App.notebookTextArea.addEventListener('blur', event => App.hardSaveNotebookEvent(event))
+
+    App.saveStatusButton = document.getElementById("save-status-button")
+    App.saveStatusButton.addEventListener('click', event => App.hardSaveNotebookEvent(event))
+
+    App.lectureUsersContainer = document.getElementById("lecture-users")
+    App.lectureUsersContainer.addEventListener('click', event => App.clickUserEvent(event))
+  }
+
+  static autoSaveNotebookEvent(event) {
+    event.preventDefault()
+    var notebookToSave = Notebook.all().find(notebook => notebook.id == event.target.dataset.notebookid)
+    App.saveStatusButton.style.color = "rgb(207, 87, 87)"
+    if (new Date() - notebookToSave.lastsave > 5000) {
+      Adapter.saveNotebook(notebookToSave.id, App.notebookTextArea.value)
+      .then(json => notebookToSave.content = json.content)
+      .then(res => {notebookToSave.lastsave = new Date()
+                    App.saveStatusButton.style.color = "rgb(92, 221, 112)"})
+    }
+    // setTimeout(event => console.log(event.target), 50000)
+  }
+
+  static hardSaveNotebookEvent(event) {
+    event.preventDefault()
+    var notebookToSave = Notebook.all().find(notebook => notebook.id == event.target.dataset.notebookid)
+    Adapter.saveNotebook(notebookToSave.id, App.notebookTextArea.value)
+    .then(json => notebookToSave.content = json.content)
+    .then(res => {notebookToSave.lastsave = new Date()
+                  App.saveStatusButton.style.color = "rgb(92, 221, 112)"})
+    }
+
+  static clickUserEvent(event) {
+    event.preventDefault()
+    if (event.target.dataset.action === "click-user") {
+      let clickedUser = User.all().find(user => user.id == event.target.dataset.userid)
+      let notebookToRender = Notebook.all().find(notebook =>
+        notebook.userId === clickedUser.id && notebook.lectureId === App.currentSelectedLecture.id
+      )
+      if (clickedUser.id !== App.currentUser.id) {
+          Notebook.all().length = 0
+          App.createAllNotebooks()
+          App.notebookContainer.innerHTML = notebookToRender.renderOtherUserNotebookForNotebookContainer()
+        } else {
+          App.handleRenderNotebook(App.currentSelectedLecture, notebookToRender)
+        }
+      }
   }
 
   static loginSignupElements() {
@@ -148,7 +225,7 @@ class App {
 
   static renderNewLectureButton() {
     return `<button type="button" id="create-new-lecture-button" title='Host a New Lecture'>
-              <i class="material-icons vw">speaker_notes</i>
+              <i class="material-icons vw">note_add</i>
             </button>`
   }
 

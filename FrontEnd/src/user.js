@@ -11,8 +11,26 @@ const User = (function() {
     return all
   }
 
+  static allNames() {
+    const allWithoutCurrent = all.splice(all.indexOf(App.currentUser), 1)
+    return all.map( user => user.name )
+  }
+
   renderUsersforMenuContainer() {
-    return `<div class="users-link" id="user-${this.id}" data-userid="${this.id}" data-action="click-user">User: ${this.name}</div>`
+    if (this === App.currentUser) {
+      return `<div class="current-user-link" id="user-${this.id}" data-userid="${this.id}" data-action="click-user">${this.name}</div>`
+    }else{
+      return `<div class="users-link" id="user-${this.id}" data-userid="${this.id}" data-action="click-user">${this.name}</div>`
+    }
+  }
+
+  renderForAddUser() {
+    return `<div class="user-to-add">
+            <div class="user-to-add-name">${this.name}</div>
+            <div class="remove-user-to-add-button-container">
+              <button type="button" id="remove-user-to-add-button-${this.id}" class="remove-user-to-add-button" title="Remover User" data-userid="${this.id}" data-action="remove-user">
+              <i class="material-icons">close</i></div>
+            </div>`
   }
 
 }

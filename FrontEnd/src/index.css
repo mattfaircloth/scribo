@@ -1,5 +1,6 @@
 /* font-family: 'Comfortaa', cursive; */
 /* font-family: 'Merriweather', serif; */
+/* green: rgb(92, 221, 112) */
 
 .material-icons.vw { font-size: 2vw; }
 .material-icons.vw-bigger { font-size: 2.5vw; }
@@ -249,7 +250,7 @@ button:focus {
 
 #archive-button {
   top: 11.5%;
-  right: 28.8%;
+  right: 28.9%;
 }
 
 #create-new-lecture-button {

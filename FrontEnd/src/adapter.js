@@ -40,6 +40,29 @@ class Adapter {
     .then(resp => resp.json())
   }
 
+  static saveNotebook(notebookid, content) {
+    return fetch(`http://localhost:3000/api/v1/notebooks/${notebookid}`, {
+      method: "PATCH",
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      },
+      body: JSON.stringify({content: content})
+    }).then(resp => resp.json())
+
+  }
+
+  static createNotebooksForNewLecture(userId, lectureId) {
+    return fetch("http://localhost:3000/api/v1/notebooks/", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      },
+      body: JSON.stringify({lecture_id: lectureId, user_id: userId})
+    }).then(resp => resp.json())
+  }
+
   // static createUsers({passedInName}){
   //   return fetch("http://localhost:3000/api/v1/users", {
   //     method: "POST",
