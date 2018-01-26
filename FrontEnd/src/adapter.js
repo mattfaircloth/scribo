@@ -1,3 +1,5 @@
+const baseUrl = 'http://localhost:3000/api/v1'
+
 class Adapter {
 
   static getUsers(){
@@ -26,6 +28,20 @@ class Adapter {
         title: lecTitle,
         date_time: lecDate,
         admin_id: user_id
+      })
+    }).then(resp => resp.json())
+  }
+
+  static createUser(userName, userPassword){
+    return fetch("http://localhost:3000/api/v1/users", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      },
+      body: JSON.stringify({
+        name: userName,
+        password_digest: userPassword,
       })
     }).then(resp => resp.json())
   }
@@ -61,6 +77,28 @@ class Adapter {
       },
       body: JSON.stringify({lecture_id: lectureId, user_id: userId})
     }).then(resp => resp.json())
+  }
+
+  static login (loginParams) {
+    return fetch(`http://localhost:3000/api/v1/auth`, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        'accept': 'application/json',
+        'Authorization': localStorage.getItem('jwt')
+      },
+      body: JSON.stringify(loginParams)
+    }).then(res => res.json())
+  }
+
+  static currentUser () {
+    return fetch(`http://localhost:3000/api/v1/current_user`, {
+      headers: {
+        'content-type': 'application/json',
+        'accept': 'application/json',
+        'Authorization': localStorage.getItem('jwt')
+      }
+    }).then(res => res.json())
   }
 
   // static createUsers({passedInName}){

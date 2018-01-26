@@ -1,17 +1,25 @@
 class App {
   static init() {
-    if (toekn) {
-      render home
-    } else {}
+    App.masterContainer = document.getElementById("master")
     App.createAllExistingUsers()
-    App.createAllNotebooks()
-    App.pageElements()
-    App.pageListeners()
-    App.loginSignupElements()
-    App.loginSignupListeners()
-  }
+    if (localStorage.jwt) {
+          App.masterContainer.innerHTML = App.renderReloadPage();
+          App.createAllNotebooks()
+          App.pageElements()
+          App.pageListeners()
+          setTimeout(function(){App.setCurrentUser(localStorage.getItem('name'))
+                    App.handleRenderMenu()
+                    App.createAllCurrentUserLectures() }, 500);
 
-  checklocal storange
+    }else{
+      App.masterContainer.innerHTML = App.renderFreshPage();
+      App.createAllNotebooks()
+      App.pageElements()
+      App.pageListeners()
+      App.loginSignupElements()
+      App.loginSignupListeners()
+    }
+  }
 
   static createAllExistingUsers() {
     Adapter.getUsers().then( usersData => usersData.forEach( userData => new User(userData)))
@@ -19,7 +27,6 @@ class App {
 
   static pageElements() {
     App.notebookContainer = document.getElementById("notebook")
-    App.masterContainer = document.getElementById("master")
     App.menuContainer = document.getElementById("menu")
     App.homeButtonContainer = document.getElementById("home-button-container")
   }
@@ -163,25 +170,51 @@ class App {
     App.loginForm = document.getElementById("login-form")
     App.loginName = document.getElementById("login-name")
     App.loginPassword = document.getElementById("login-password")
-    App.signupButton = document.getElementById("signup-button")
+    App.signupForm = document.getElementById("signup-form")
+    App.signupName = document.getElementById("signup-name")
+    App.signupPassword = document.getElementById("signup-password")
+    App.signupConfirmPassword = document.getElementById("signup-confirm-password")
+    App.helloMessage=document.getElementById("hello-message")
   }
 
   static loginSignupListeners() {
     App.loginForm.addEventListener('submit', event => App.loginEvent(event))
-    App.signupButton.addEventListener('click', event => App.signupEvent(event))
+    App.signupForm.addEventListener('submit', event => App.signupEvent(event))
     //fetch users once user is return render user with instance method renderWelcomeForMenur
+  }
+
+  static signupEvent(event) {
+    event.preventDefault()
+    if (App.signupPassword.value === App.signupConfirmPassword.value) {
+      Adapter.createUser(App.signupName.value, App.signupPassword.value)
+      .then( res => new User(res))
+    }
+
   }
 
   static loginEvent(event) {
     event.preventDefault()
     const loginParams = {name: App.loginName.value, password: App.loginPassword.value}
-    App.setCurrentUser()
-    App.createAllCurrentUserLectures()
-    App.handleRenderMenu()
+    App.login(loginParams)
   }
 
-  static setCurrentUser(loginValue) {
-    App.currentUser = User.all().find(user => user.name === loginValue)
+  static login(loginParams) {
+    Adapter.login(loginParams)
+      .then( user => {
+        if (!user.error) {
+          localStorage.setItem('jwt', user.jwt )
+          localStorage.setItem('name', user.name )
+          App.setCurrentUser(user.name)
+          App.createAllCurrentUserLectures()
+          App.handleRenderMenu()
+        }else{
+          App.helloMessage.innerHTML = user.error
+        }
+      })
+    }
+
+  static setCurrentUser(name) {
+    App.currentUser = User.all().find(user => user.name === name)
   }
 
   static createAllCurrentUserLectures() {
@@ -207,11 +240,6 @@ class App {
 
   static createAllNotebooks() {
     Adapter.getNotebooks().then( notebooksData => notebooksData.forEach( notebookData => new Notebook(notebookData)))
-  }
-
-  static signupEvent(event) {
-    event.preventDefault()
-    console.log("NOT IMPLEMENTED");
   }
 
   static renderLogoForNotebookContainer() {
@@ -261,6 +289,8 @@ class App {
     App.masterContainer.insertAdjacentHTML('beforeend', App.renderArchiveButton())
 
     App.masterContainer.insertAdjacentHTML('beforeend', App.renderLogoutButton())
+    App.logoutButton = document.getElementById("logout-button")
+    App.logoutButton.addEventListener('click', event => App.logout())
   }
 
   static handleRenderLogoForNotebookContainer() {
@@ -278,6 +308,57 @@ class App {
     App.handleRenderNewLectureFormForMenuContainer()
     App.newLectureElements()
     App.newLectureListeners()
+  }
+
+  static logout(){
+    localStorage.removeItem('jwt')
+    localStorage.removeItem('name')
+    location.reload();
+  }
+
+  static renderFreshPage() {
+    return `<div id="notebook">
+             <div id="logo-container">
+               <div id="logo-right-paren">(</div>
+               <div id="logo-left-paren">)</div>
+               <div id="logo-float-paren">)</div>
+               <div id="logo-sribio">Scribo
+               <div id="slogan">write, remember – learn together</div></div>
+             </div>
+           </div>
+           <div id="menu">
+             <div id="big-hello">Hello!</div>
+             <div id="hello-message">Have a Scribo account?<br>Sign In here:</div>
+             <form id="login-form">
+               <input type="text" id="login-name" name="name" placeholder="Name"><br>
+               <input type="text" id="login-password" name="password" placeholder="Password"><br>
+               <input type="submit" id="login-submit" value="Sign In">
+             </form>
+             <div id="signup-message">
+               Don't have an account?<br>
+               <form id="signup-form">
+                 <input type="text" id="signup-name" name="name" placeholder="Name"><br>
+                 <input type="text" id="signup-password" name="password" placeholder="Password"><br>
+                 <input type="text" id="signup-confirm-password" name="password" placeholder="Confirm Password"><br>
+                 <input type="submit" id="signup-button" value="Sign Up">
+               </form>
+               <div id ="small-sign-up-error"></div>
+           </div>`
+  }
+
+  static renderReloadPage() {
+    return `<div id="notebook">
+             <div id="logo-container">
+               <div id="logo-right-paren">(</div>
+               <div id="logo-left-paren">)</div>
+               <div id="logo-float-paren">)</div>
+               <div id="logo-sribio">Scribo
+               <div id="slogan">write, remember – learn together</div></div>
+             </div>
+           </div>
+           <div id="menu">
+
+           </div>`
   }
 
 }

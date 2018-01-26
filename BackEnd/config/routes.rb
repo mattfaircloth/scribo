@@ -14,4 +14,7 @@ Rails.application.routes.draw do
   get 'api/v1/lectures/:id/notebooks', to: 'api/v1/lectures#notebooks', as: 'api_v1_lecture_notebooks'
   get 'api/v1/lectures/:id/users', to: 'api/v1/lectures#users', as: 'api_v1_lecture_users'
 
+  post 'api/v1/auth', to: 'api/v1/auth#create'
+  get 'api/v1/current_user', to: 'api/v1/auth#show'
+
 end

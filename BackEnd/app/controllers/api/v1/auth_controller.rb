@@ -4,24 +4,24 @@ class Api::V1::AuthController < ApplicationController
   def show
     render json: {
       id: current_user.id,
-      username: current_user.username
+      name: current_user.name
     }
   end
 
   def create
     # see if there is a user with this username
-    user = User.find_by(username: params[:username])
+    user = User.find_by(name: params[:name])
     # if there is, make sure that they have the correct password
     if user.present? && user.authenticate(params[:password])
       # if they do, render back a json response of the user info
       # issue token
       created_jwt = issue_token({id: user.id})
-      render json: {username: user.username,jwt: created_jwt}
+      render json: {name: user.name, jwt: created_jwt}
     else
       # otherwise, render back some error response
       render json: {
-        error: 'Username or password incorrect'
-      }, status: 404
+        error: 'Name or Password is Incorrect.<br />Try again or Sign Up below!'
+      }, status: 403
     end
   end
 end
