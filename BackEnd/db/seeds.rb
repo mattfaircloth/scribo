@@ -7,11 +7,12 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 20.times do
-  User.create(name: Faker::Pokemon.name)
+  name = Faker::Pokemon.unique.name
+  User.create(name: name, password: name)
 end
 
 20.times do
-  Lecture.create(title: Faker::Pokemon.location, date_time: Faker::Date.forward(60))
+  Lecture.create(title: Faker::Pokemon.unique.location, date_time: Faker::Date.forward(60))
 end
 
 User.all.each do
@@ -23,6 +24,6 @@ end
 
 Notebook.all.each do
   |notebook|
-  notebook.content = Faker::ChuckNorris.fact
+  notebook.content = Faker::Pokemon.unique.move
   notebook.save
 end

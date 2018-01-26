@@ -18,10 +18,6 @@ const Lecture = (function() {
     return `<div class="menu-lecture-container" id="menu-lecture-container-${this.id}" data-lectureid="${this.id}" data-action="click-lecture">
               <div class="menu-lecture-title" data-lectureid="${this.id}" data-action="click-lecture">${this.title}</div>
               <div class="menu-lecture-date" data-lectureid="${this.id}" data-action="click-lecture">${this.dateTime}</div>
-              <div class="menu-lecture-archive">
-                <button type="button" id="menue-archive-button-${this.id}" class="menu-lecture-archive-button" title="Archive Lecture" data-lectureid="${this.id}" data-action="archive-lecture">
-                <i class="material-icons vw-smaller">archive</i>
-                </button></div>
             </div>`
   }
 

@@ -57,11 +57,11 @@ class App {
     return `<div id=>
             <div id="create-lecture-form">
               <input type="text" id="new-lecture-title" placeholder="Title"><br>
-              <input type="text" id="new-lecture-date" placeholder="Date"><br><br>
-              <input id="users-search">
+              <input type="datetime-local" id="new-lecture-date" placeholder="Date"><br><br>
+              <input id="users-search" placeholder="Add Users">
               <button type="button" id="add-user-button"><i class="material-icons vw-smaller">add_box</i></button><br><br>
               <div id="users-to-add"></div>
-              <button type="button" id="new-lecture-button-submit">Create Lecture</button>
+              <button type="button" id="new-lecture-button-submit"><i class="material-icons vw">save</i></button>
             </div>`
   }
 
@@ -77,16 +77,16 @@ class App {
   }
 
   static newLectureListeners(){
-    App.newLectureSubmitButton.addEventListener("click", (event)=>{
-      Adapter.createLecture(App.newLectureTitle.value, App.newLectureDate.value, App.currentUser.id)
-        .then(json => App.arrOfUsersToAdd.forEach( user => Adapter.createNotebooksForNewLecture(user.id, json.id)
-        .then( res => {
-          App.deleteObjectsStoredInFrontEnd()
-          App.rerequestAllObjects()
-        }).then( res => App.handleWelcomeAndCurrentUserLecturesForMenuContainer() )))
-    })
-
+    App.newLectureSubmitButton.addEventListener("click", event => App.newLectureClickEvent(event))
     App.newLectureAddUserButton.addEventListener("click", event => App.addUserButtonEvent(event))
+  }
+
+  static newLectureClickEvent() {
+    Adapter.createLecture(App.newLectureTitle.value, App.newLectureDate.value, App.currentUser.id)
+      .then(json => App.arrOfUsersToAdd.forEach( user => Adapter.createNotebooksForNewLecture(user.id, json.id)))
+      .then(res => App.deleteObjectsStoredInFrontEnd())
+      .then(res => App.rerequestAllObjects())
+      .then(res => location.reload())
   }
 
   static addUserButtonEvent(event) {
@@ -125,6 +125,9 @@ class App {
 
     App.lectureUsersContainer = document.getElementById("lecture-users")
     App.lectureUsersContainer.addEventListener('click', event => App.clickUserEvent(event))
+
+    App.leaveLectureButton = document.getElementById("delete-lecture")
+    App.leaveLectureButton.addEventListener('click', event => App.leaveLectureEvent(event))
   }
 
   static autoSaveNotebookEvent(event) {
@@ -138,6 +141,12 @@ class App {
                     App.saveStatusButton.style.color = "rgb(92, 221, 112)"})
     }
     // setTimeout(event => console.log(event.target), 50000)
+  }
+
+  static leaveLectureEvent(event) {
+    console.log(event);
+    // const notebookToDelete = Notebook.all().find(notebook => event.target.dataset.lectureid == notebook.lectureid)
+    // Adapter.deleteNotebook(notebookToDelete.id).then(res => Notebook.all().splice(Notebook.all().indexOf(notebookToDelete), 1)).then(res => location.reload)
   }
 
   static hardSaveNotebookEvent(event) {
@@ -188,6 +197,7 @@ class App {
     if (App.signupPassword.value === App.signupConfirmPassword.value) {
       Adapter.createUser(App.signupName.value, App.signupPassword.value)
       .then( res => new User(res))
+      .then( res => App.login({name: App.signupName.value, password: App.signupPassword.value}))
     }
 
   }
@@ -270,12 +280,6 @@ class App {
             </button>`
   }
 
-  static renderArchiveButton() {
-    return `<button type="button" id="archive-button" title='Lecture Archive'>
-              <i class="material-icons vw">archive</i>
-            </button>`
-  }
-
 
   static handleRenderMenu() {
     App.masterContainer.insertAdjacentHTML('beforeend', App.renderHomeButton())
@@ -285,8 +289,6 @@ class App {
     App.masterContainer.insertAdjacentHTML('beforeend', App.renderNewLectureButton())
     App.newLectureButton = document.getElementById("create-new-lecture-button")
     App.newLectureButton.addEventListener('click', event => App.newLectureButtonClickEvent(event))
-
-    App.masterContainer.insertAdjacentHTML('beforeend', App.renderArchiveButton())
 
     App.masterContainer.insertAdjacentHTML('beforeend', App.renderLogoutButton())
     App.logoutButton = document.getElementById("logout-button")
@@ -331,15 +333,15 @@ class App {
              <div id="hello-message">Have a Scribo account?<br>Sign In here:</div>
              <form id="login-form">
                <input type="text" id="login-name" name="name" placeholder="Name"><br>
-               <input type="text" id="login-password" name="password" placeholder="Password"><br>
+               <input type="password" id="login-password" name="password" placeholder="Password"><br>
                <input type="submit" id="login-submit" value="Sign In">
              </form>
              <div id="signup-message">
                Don't have an account?<br>
                <form id="signup-form">
                  <input type="text" id="signup-name" name="name" placeholder="Name"><br>
-                 <input type="text" id="signup-password" name="password" placeholder="Password"><br>
-                 <input type="text" id="signup-confirm-password" name="password" placeholder="Confirm Password"><br>
+                 <input type="password" id="signup-password" name="password" placeholder="Password"><br>
+                 <input type="password" id="signup-confirm-password" name="password" placeholder="Confirm Password"><br>
                  <input type="submit" id="signup-button" value="Sign Up">
                </form>
                <div id ="small-sign-up-error"></div>

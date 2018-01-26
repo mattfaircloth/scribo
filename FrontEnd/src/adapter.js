@@ -41,7 +41,7 @@ class Adapter {
       },
       body: JSON.stringify({
         name: userName,
-        password_digest: userPassword,
+        password: userPassword,
       })
     }).then(resp => resp.json())
   }
@@ -65,7 +65,16 @@ class Adapter {
       },
       body: JSON.stringify({content: content})
     }).then(resp => resp.json())
+  }
 
+  static deleteNotebook(notebookid) {
+    return fetch(`http://localhost:3000/api/v1/notebooks/${notebookid}`, {
+      method: "DELETE",
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      }
+    }).then(resp => resp.json())
   }
 
   static createNotebooksForNewLecture(userId, lectureId) {

@@ -29,7 +29,7 @@ class Api::V1::NotebooksController < ApplicationController
     end
   end
 
-  def delete
+  def destroy
    @notebook = Notebook.find(params[:id])
    @notebook.destroy
    render json: {message:"Zap! Notebook deleted"}

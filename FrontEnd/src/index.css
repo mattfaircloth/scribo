@@ -326,23 +326,6 @@ button:focus {
   margin-left: 2%;
 }
 
-.menu-lecture-archive {
-  grid-row-start: 1;
-  grid-row-end: 3;
-  grid-column: 2;
-  align: right;
-}
-
-.menu-lecture-archive-button {
-  color: rgb(166, 150, 127);
-  background: transparent;
-  border: none;
-  padding: 2%;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-}
-
 .menu-lecture-archive-button:hover {
   color: rgb(103, 175, 235);
 }
