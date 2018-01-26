@@ -41,7 +41,7 @@ class App {
       App.currentSelectedLecture = Lecture.all().find(lecture => lecture.id == event.target.dataset.lectureid)
       let usersNotebook = App.currentSelectedLecture.notebooks.find(notebook => notebook.userId === App.currentUser.id)
       App.handleRenderNotebook(App.currentSelectedLecture, usersNotebook)
-
+      $("#notebook-textarea").linedtextarea();
     }
   }
 
@@ -54,14 +54,17 @@ class App {
   }
 
   static renderCreateLectureFormForMenuContainer(){
-    return `<div id=>
+    return `<div id="new-lecture-container">
+            <div id="menu-header">
+              Host a<br/>New Lecture
+            </div>
             <div id="create-lecture-form">
               <input type="text" id="new-lecture-title" placeholder="Title"><br>
               <input type="datetime-local" id="new-lecture-date" placeholder="Date"><br><br>
               <input id="users-search" placeholder="Add Users">
               <button type="button" id="add-user-button"><i class="material-icons vw-smaller">add_box</i></button><br><br>
               <div id="users-to-add"></div>
-              <button type="button" id="new-lecture-button-submit"><i class="material-icons vw">save</i></button>
+              <button type="button" id="new-lecture-button-submit"><i class="material-icons .vw-bigger">save</i></button>
             </div>`
   }
 
@@ -338,6 +341,7 @@ class App {
              </form>
              <div id="signup-message">
                Don't have an account?<br>
+              </div>
                <form id="signup-form">
                  <input type="text" id="signup-name" name="name" placeholder="Name"><br>
                  <input type="password" id="signup-password" name="password" placeholder="Password"><br>

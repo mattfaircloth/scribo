@@ -3,7 +3,7 @@
 /* green: rgb(92, 221, 112) */
 
 .material-icons.vw { font-size: 2vw; }
-.material-icons.vw-bigger { font-size: 2.5vw; }
+.material-icons.vw-bigger { font-size: 3vw; }
 .material-icons.vw-smaller { font-size: 1.5vw; }
 
 body {
@@ -35,6 +35,8 @@ body {
   background: linear-gradient(rgb(255, 254, 245) 75%, rgb(237, 236, 226));
   background-attachment: fixed;
   box-shadow:10px 10px 50px rgb(44, 44, 55);
+  position: relative;
+
 }
 
 #menu {
@@ -49,9 +51,9 @@ body {
 }
 
 #logo-container {
-  position:absolute;
+  position: absolute;
   top: 45%;
-  right: 50.5%;
+  left: 20%;
 }
 
 #logo-sribio {
@@ -248,14 +250,9 @@ button:focus {
   right: 31.5%;
 }
 
-#archive-button {
-  top: 11.5%;
-  right: 28.9%;
-}
-
 #create-new-lecture-button {
   top: 11.5%;
-  right: 26%;
+  right: 29%;
 }
 
 #logout-button {
@@ -328,4 +325,178 @@ button:focus {
 
 .menu-lecture-archive-button:hover {
   color: rgb(103, 175, 235);
+}
+
+#signup-name, #signup-password, #signup-confirm-password  {
+  background-color: inherit;
+  font-family: 'Merriweather', serif;
+  color: rgb(54, 54, 71);
+  font-size: 1vw;
+  text-align: center;
+  border-style: none;
+  border-bottom-style: solid;
+  border-color: rgb(54, 54, 71);
+  border-width: 1px;
+  margin: 1.5%;
+  margin-top: 2%;
+  width: 12vw;
+}
+
+#signup-message {
+  position: relative;
+  top: 15vh;
+}
+
+#signup-form {
+  position: relative;
+  top: 17vh;
+}
+
+#signup-form:focus, #signup-name:focus, #signup-password:focus, #signup-confirm-password:focus  {
+  outline: none;
+}
+
+#notebook-textarea {
+  resize: none;
+  border: none;
+  background: transparent;
+  padding: 1%;
+  position: absolute;
+  left: 4%;
+  top: 10%;
+  width: 90%;
+  height: 88%;
+  font-family: 'Merriweather', serif;
+  font-size: 1.25vw;
+  text-align: justify;
+}
+
+#notebook-textarea:focus {
+  outline: none;
+  background: rgb(249, 247, 227);
+}
+
+#save-status-button {
+  background: transparent;
+  border: none;
+  position: absolute;
+  color: rgb(92, 221, 112);
+  position: absolute;
+  top: 2.5%;
+  right: 2.5%;
+}
+
+#menu-header-small {
+  margin-top: -5%;
+  font-style: italic;
+}
+
+#users-text {
+  font-size: 2vw;
+  margin-top: 5%;
+  margin-bottom: 2.5%;
+}
+
+.current-user-link, .users-link {
+  margin-bottom: 2%;
+  color: rgb(81, 81, 107);
+  font-size: 1.5vw;
+}
+
+.current-user-link {
+  font-style: italic;
+}
+
+.current-user-link:hover, .users-link:hover {
+  margin-bottom: 2%;
+  color: rgb(81, 81, 107);
+  font-size: 1.7vw;
+  cursor: pointer;
+  color: rgb(100, 100, 135);
+}
+
+.delete-lecture-button {
+  background: transparent;
+  border: none;
+  position: absolute;
+  color: rgb(207, 87, 87);
+  position: relative;
+  margin-top: 10%;
+}
+
+.delete-lecture-button:hover {
+  color: rgb(227, 66, 66);
+}
+
+#new-lecture-title, #new-lecture-date, #users-search {
+  background-color: inherit;
+  font-family: 'Merriweather', serif;
+  color: rgb(54, 54, 71);
+  font-size: 1vw;
+  text-align: center;
+  border-style: none;
+  border-bottom-style: solid;
+  border-color: rgb(54, 54, 71);
+  border-width: 1px;
+  margin: 1.5%;
+  margin-top: 2%;
+  width: 20vw;
+}
+
+#new-lecture-title, #users-search {
+  font-size: 1.5vw;
+}
+
+#users-search {
+  width: 16.5vw;
+}
+
+#add-user-button {
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: rgb(232, 198, 152);
+}
+
+#add-user-button:hover {
+  color: rgb(92, 221, 112);
+}
+
+.remove-user-to-add-button {
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: rgb(207, 87, 87);
+}
+
+.remove-user-to-add-button:hover {
+  color: rgb(227, 66, 66);
+}
+
+.user-to-add {
+  margin-bottom: 5%;
+}
+
+#users-to-add {
+  position: absolute;
+  width: 25%;
+  max-height: 25%;
+  margin-left: 12.5%;
+  overflow: scroll;
+  right: 7.5%;
+  top: 50%;
+}
+
+#new-lecture-button-submit {
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: rgb(232, 198, 152);
+  position: absolute;
+  right: 19%;
+  top: 75%;
+}
+
+#new-lecture-button-submit:hover {
+  color: rgb(92, 221, 112);
 }

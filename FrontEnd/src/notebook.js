@@ -22,8 +22,8 @@ const Notebook = (function() {
       this.lecture = Lecture.all().find(lecture => lecture.id === this.lectureId)
       return `<div id="notebook-master">
                 <div id="notebook-save-status-button">
-                  <button type="button" id="save-status-button" data-notebookid="${this.id}" title='Save Lecture'>
-                    <i class="material-icons vw" data-notebookid="${this.id}">save</i>
+                  <button type="button" id="save-status-button" data-notebookid="${this.id}" title='Save Notebook'>
+                    <i class="material-icons vw-bigger" data-notebookid="${this.id}">save</i>
                   </button>
                 </div>
                 <div class="notebook-notebook" id="notebook-${this.id}" data-notebookid="${this.id}">
