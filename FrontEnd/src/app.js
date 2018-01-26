@@ -144,9 +144,10 @@ class App {
   }
 
   static leaveLectureEvent(event) {
-    console.log(event);
-    // const notebookToDelete = Notebook.all().find(notebook => event.target.dataset.lectureid == notebook.lectureid)
-    // Adapter.deleteNotebook(notebookToDelete.id).then(res => Notebook.all().splice(Notebook.all().indexOf(notebookToDelete), 1)).then(res => location.reload)
+    const notebookToDelete = Notebook.all().find(notebook => event.target.dataset.lectureid == notebook.lectureId)
+    const notebookToDeleteIndex = Notebook.all().indexOf(notebookToDelete)
+    console.log(notebookToDeleteIndex)
+    Adapter.deleteNotebook(notebookToDelete.id).then( res => Notebook.all().splice(notebookToDeleteIndex, 1)).then(res => location.reload())
   }
 
   static hardSaveNotebookEvent(event) {
