@@ -25,11 +25,11 @@ const User = (function() {
   }
 
   renderForAddUser() {
-    return `<span class="user-to-add">
+    return `<span class="user-to-add" id="user-to-add-${this.id}">
             <span class="user-to-add-name">${this.name}</span>
-            <span class="remove-user-to-add-button-container">
+            <span class="remove-user-to-add-button-container" id=remove-user-button-${this.id}>
               <button type="button" id="remove-user-to-add-button-${this.id}" class="remove-user-to-add-button" title="Remover User" data-userid="${this.id}" data-action="remove-user">
-              <i class="material-icons vw-smaller">close</i></span>
+              <i class="material-icons" data-userid="${this.id}" data-action="remove-user">close</i></span>
             </span>`
   }
 

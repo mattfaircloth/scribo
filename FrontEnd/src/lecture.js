@@ -33,7 +33,7 @@ const Lecture = (function() {
               <div id="lecture-users">${this.users.map(user => user.renderUsersforMenuContainer()).join('')}</div>
               <div id="delete-lecture">
                 <button type="button" id="delete-lecture-button-${this.id}" class="delete-lecture-button" title="Leave Lecture and Delete Notebook" data-lectureid="${this.id}" data-action="delete-lecture">
-                <i class="material-icons vw-bigger">delete_forever</i>
+                <i class="material-icons vw-bigger" data-lectureid="${this.id}" data-action="delete-lecture">delete_forever</i>
               </button></div>
             </div>`
   }
