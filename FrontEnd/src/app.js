@@ -41,7 +41,6 @@ class App {
       App.currentSelectedLecture = Lecture.all().find(lecture => lecture.id == event.target.dataset.lectureid)
       let usersNotebook = App.currentSelectedLecture.notebooks.find(notebook => notebook.userId === App.currentUser.id)
       App.handleRenderNotebook(App.currentSelectedLecture, usersNotebook)
-      $("#notebook-textarea").linedtextarea();
     }
   }
 
@@ -65,7 +64,7 @@ class App {
               <input id="users-search" placeholder="Add Users">
               <button type="button" id="add-user-button"><i class="material-icons vw-smaller">add_box</i></button><br><br>
               <div id="users-to-add"></div>
-              <button type="button" id="new-lecture-button-submit"><i class="material-icons .vw-bigger">save</i></button>
+              <button type="button" id="new-lecture-button-submit"><i class="material-icons vw-bigger">save</i></button>
             </div>`
   }
 

@@ -11,14 +11,12 @@
   User.create(name: name, password: name)
 end
 
-20.times do
+5.times do
   Lecture.create(title: Faker::Pokemon.unique.location, date_time: Faker::Date.forward(60))
 end
 
 User.all.each do
   |user|
-  user.lectures.push(Lecture.all.sample)
-  user.lectures.push(Lecture.all.sample)
   user.lectures.push(Lecture.all.sample)
 end
 
