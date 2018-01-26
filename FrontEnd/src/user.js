@@ -29,7 +29,7 @@ const User = (function() {
             <span class="user-to-add-name">${this.name}</span>
             <span class="remove-user-to-add-button-container" id=remove-user-button-${this.id}>
               <button type="button" id="remove-user-to-add-button-${this.id}" class="remove-user-to-add-button" title="Remover User" data-userid="${this.id}" data-action="remove-user">
-              <i class="material-icons" data-userid="${this.id}" data-action="remove-user">close</i></span>
+              <i class="material-icons vw-smaller" data-userid="${this.id}" data-action="remove-user">close</i></span>
             </span>`
   }
 
