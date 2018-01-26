@@ -47,9 +47,10 @@ class App {
 
   static handleRenderNewLectureFormForMenuContainer() {
     App.handleRenderLogoForNotebookContainer()
+    App.userNamesArray = User.allNames()
     App.menuContainer.innerHTML = App.renderCreateLectureFormForMenuContainer()
     $( "#users-search" ).autocomplete({
-      source: User.allNames()
+      source: App.userNamesArray
     });
   }
 
@@ -92,9 +93,28 @@ class App {
   static addUserButtonEvent(event) {
     event.preventDefault();
     const userToAdd = User.all().find(user => user.name == App.newLectureAddUserInput.value)
-    const userToAddName = userToAdd.name
-    App.newLectureUsersToAddContainer.insertAdjacentHTML('beforeend', userToAdd.renderForAddUser())
-    App.arrOfUsersToAdd.push(userToAdd)
+
+    if (!App.arrOfUsersToAdd.includes(userToAdd)){
+      const userToAddName = userToAdd.name
+      const userToAddIndex = App.userNamesArray.indexOf(userToAddName)
+      App.userNamesArray.splice(userToAddIndex, 1)
+      App.newLectureUsersToAddContainer.insertAdjacentHTML('beforeend', userToAdd.renderForAddUser())
+      App.arrOfUsersToAdd.push(userToAdd)
+      App.newLectureRemoveUsersToAddContainer = document.getElementById(`remove-user-to-add-button-${userToAdd.id}`)
+      App.newLectureRemoveUsersToAddContainer.addEventListener("click", event => App.removeUserFromAddUserContainerButtonEvent(event))
+    }
+  }
+
+
+  static removeUserFromAddUserContainerButtonEvent(event){
+    event.preventDefault();
+    const userToRemove = User.all().find(user => user.id == event.target.dataset.userid)
+    const userToRemoveName = userToRemove.name
+    const userToRemoveIndex = App.arrOfUsersToAdd.indexOf(userToRemove)
+    App.newLectureUsersInAddUsersContainerParent = document.getElementById(`user-to-add-${userToRemove.id}`)
+    App.newLectureUsersInAddUsersContainerParent.remove()
+    App.arrOfUsersToAdd.splice(userToRemoveIndex, 1)
+    App.userNamesArray.push(userToRemoveName)
   }
 
   static deleteObjectsStoredInFrontEnd(){
@@ -146,7 +166,6 @@ class App {
   static leaveLectureEvent(event) {
     const notebookToDelete = Notebook.all().find(notebook => event.target.dataset.lectureid == notebook.lectureId)
     const notebookToDeleteIndex = Notebook.all().indexOf(notebookToDelete)
-    console.log(notebookToDeleteIndex)
     Adapter.deleteNotebook(notebookToDelete.id).then( res => Notebook.all().splice(notebookToDeleteIndex, 1)).then(res => location.reload())
   }
 
