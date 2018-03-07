@@ -2,7 +2,7 @@
 Scribo is an interactive and collaborative note taking application for students. This web application uses vanilla Javascript and a custom back-end Rails API.
 
 ## Using the application
-Once users signup and login, they can join a lecture and take notes. Users can see their other classmates a lecture, and their notebook will autosave.
+Once users signup and login, they can join a lecture and take notes. Users can see their other classmates in a lecture, and their notebook will autosave.
 
 ## Installation Instructions
 `This web app requires it's backend couterpart`
